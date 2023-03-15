@@ -19,21 +19,21 @@
 body {
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 100%;
-    background: url('../images/bg.jpeg')no-repeat center;
+    background: url('../images/bg.jpeg') no-repeat center;
     background-size: cover;
 }
 
 .name-sys {
-    text-align: center;
+    text-align: center; 
     position: relative;
     width:30%;
-    top: 18vh;
+    top: 20vh;
     left: 4%;
 }
 
  .name-sys p {
-    font-family: dancingscript-regular;
-    font-size: 160px;
+    font-family: dancingscript-regular !important;
+    font-size: 6vw !important;
     color:white;
 }
    
