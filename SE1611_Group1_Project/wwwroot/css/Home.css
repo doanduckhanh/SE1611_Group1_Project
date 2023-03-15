@@ -1,0 +1,42 @@
+﻿
+@font-face {
+    font-family: 'dancingscript-regular';
+    src: url('../font/static/dancingscript-regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'dancingscript-medium';
+    src: url('../font/static/dancingscript-medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'dancingscript-semibold';
+    src: url('../font/static/dancingscript-semibold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'dancingscript-bold';
+    src: url('../font/static/dancingscript-bold.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 100%;
+    background: url('../images/bg.jpeg')no-repeat center;
+    background-size: cover;
+}
+
+.name-sys {
+    text-align: center;
+    position: relative;
+    width:30%;
+    top: 18vh;
+    left: 4%;
+}
+
+ .name-sys p {
+    font-family: dancingscript-regular;
+    font-size: 160px;
+    color:white;
+}
+   
+   
+    
+
