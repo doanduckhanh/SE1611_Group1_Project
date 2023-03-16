@@ -16,6 +16,7 @@ namespace SE1611_Group1_Project.Pages
         {
             ViewData["Role"] = HttpContext.Session.GetInt32("Role");
             ViewData["Username"] = HttpContext.Session.GetString("Username");
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
         }
     }
 }

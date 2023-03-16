@@ -1,6 +1,7 @@
 ﻿@page
 @model SE1611_Group1_Project.Pages.Login.IndexModel
 @{
+	ViewData["Title"] = "Login";
 }
 <link href="~/css/login.css" rel="stylesheet" />
 <body>
@@ -25,7 +26,7 @@
 					<label class="check" for="check3">Show password</label>
 				</div>
 				<div class="agile-right" style="float:right">
-					<a href="#">forgot password?</a>
+					<a href="/Auth/ForgotPassword">forgot password?</a>
 				</div>
 			</div>
 

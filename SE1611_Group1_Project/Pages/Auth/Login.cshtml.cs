@@ -29,10 +29,12 @@ namespace SE1611_Group1_Project.Pages.Login
 			{
 				if (UserName.Equals(user.UserName, StringComparison.Ordinal) && Password.Equals(user.Password, StringComparison.Ordinal))
 				{
-					HttpContext.Session.SetInt32("UserId", user.UserId);
-					HttpContext.Session.SetInt32("Role", (int)user.RoleId);
+					HttpContext.Session.SetInt32("UserId", (int)user.UserId);
+					HttpContext.Session.SetInt32("Role",  (int)user.RoleId);
 					HttpContext.Session.SetString("Username", user.UserName);
-					return RedirectToPage("/Index");
+                    HttpContext.Session.SetString("Password", user.Password);
+
+                    return RedirectToPage("/Index");
 				}
 				else
 				{
