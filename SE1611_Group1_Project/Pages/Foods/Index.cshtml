@@ -1,0 +1,50 @@
+﻿@page
+@using SE1611_Group1_Project.Models
+@model SE1611_Group1_Project.Pages.Foods.IndexModel
+@{
+    var cateList = ViewData["categoryList"] as IEnumerable<Category>;
+    var foodPaging = ViewData["Product"] as List<Food>;
+    var context = new FoodOrderContext();
+    var prevDisabled = Model.IndexPaging == 1 ? "disabled" : "";
+    var nextDisabled = Model.IndexPaging == Model.TotalPage ? "disabled" : "";
+}
+<h1>Menu</h1>
+<form>
+    Category: <select asp-for="CategoryId" asp-items="Model.Categories">
+        <option value=0>All</option>
+        @foreach (Category item in cateList)
+        {
+            <option value=@item.CategoryId>@item.CategoryName</option>
+        }
+    </select>
+    Find by name: <input asp-for="SearchString" type="text" />
+    <input type="submit" class="btn btn-primary" value="Search" />
+    | <a href="/foods?CateId=0&SearchString=&IndexPaging=1">Back to full list</a>
+</form>
+<div class="container" style="margin-top: 30px">
+    <div class="row">
+        @foreach (var item in foodPaging)
+        {
+            <div class="col-sm">
+                <div class="col">
+                    <img src="@item.FoodImage" alt="@item.FoodName" style="max-width: 150px"/>
+                    <a style="color:blue">$@item.FoodPrice</a>
+                </div>
+                <a style="color:blue">@item.FoodName</a>
+                <div class="col">
+                    <a>Genre: @item.Category.CategoryName</a>
+                </div>
+                <div class="col">
+                    <form method="post">
+                        <input type="submit" asp-page-handler="AddToCart" value="AddToCart" asp-route-id="@item.FoodId" class="btn btn-primary" />
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div style="margin-top: 200px">
+    <a href="/Foods/index?GenreId=@Model.CategoryId&SearchString=@Model.SearchString&IndexPaging=@(Model.IndexPaging-1)" class="btn btn-primary @prevDisabled">Previous</a>
+    <a href="/Foods/index?GenreId=@Model.CategoryId&SearchString=@Model.SearchString&IndexPaging=@(Model.IndexPaging+1)" class="btn btn-primary @nextDisabled">Next</a>
+    Page: @Model.IndexPaging/@Model.TotalPage
+</div>
