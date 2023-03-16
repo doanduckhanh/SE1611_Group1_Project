@@ -27,6 +27,14 @@ namespace SE1611_Group1_Project.Pages.Users
             ViewData["Role"] = HttpContext.Session.GetInt32("Role");
             ViewData["Username"] = HttpContext.Session.GetString("Username");
             ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                Response.Redirect("/Auth/Login");
+            }
+            else if (HttpContext.Session.GetInt32("UserId") != null && HttpContext.Session.GetInt32("Role") != 1)
+            {
+                Response.Redirect("/Auth/403");
+            }
             if (id == null || _context.Users == null)
             {
                 return NotFound();
@@ -38,7 +46,7 @@ namespace SE1611_Group1_Project.Pages.Users
                 return NotFound();
             }
             User = user;
-            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
+            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
             return Page();
         }
 
