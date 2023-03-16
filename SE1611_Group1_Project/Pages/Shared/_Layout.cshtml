@@ -32,19 +32,19 @@
                             </a>
 
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" asp-page="">Profile</a></li>
+                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" href="/Auth/Profile?id=@ViewData["UserId"]">Profile</a></li>
                                 <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" asp-page="">Change Password</a></li>
-                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" asp-page="/Logout/Index">Logout</a></li>
+                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-page-handler="Logout" asp-page="/Auth/Logout" >Logout</a></li>
                             </ul>
                         </div>
                     }else{
-                         <a class="text-white text-decoration-none" asp-are="" asp-page="/Authen/Login">Login</a>
+                         <a class="text-white text-decoration-none" asp-are="" asp-page="/Auth/Login">Login</a>
                     }
                 </div>
             </div>
         </nav>
     </header>
-    <div>
+    <div class="content">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
