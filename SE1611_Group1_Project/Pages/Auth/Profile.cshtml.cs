@@ -12,6 +12,7 @@ namespace SE1611_Group1_Project.Pages.Authen
 
         [BindProperty]
         public User User { get; set; } = default!;
+        public string Msg { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -57,13 +58,15 @@ namespace SE1611_Group1_Project.Pages.Authen
                 if (!UserExists(User.UserId))
                 {
                     return NotFound();
+                    Msg = "Update Failed!";
                 }
                 else
                 {
                     throw;
+                    Msg = "Update Failed!";
                 }
             }
-
+            Msg = "Update Successfull!";
             return Page();
         }
 
