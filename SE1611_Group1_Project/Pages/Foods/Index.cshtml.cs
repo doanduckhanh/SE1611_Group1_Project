@@ -8,7 +8,7 @@ namespace SE1611_Group1_Project.Pages.Foods
     public class IndexModel : PageModel
     {
         public static FoodOrderContext context = new FoodOrderContext();
-        PaginatedList<Food> foods = new PaginatedList<Food>(context.Foods.ToList(), context.Foods.Count(), 1, 6);
+        PaginatedList<Food> foods = new PaginatedList<Food>(context.Foods.ToList(), context.Foods.Count(), 1, 3);
 
         [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
@@ -32,16 +32,16 @@ namespace SE1611_Group1_Project.Pages.Foods
             if (categoryId != 0)
             {
                 var listFoods = String.IsNullOrEmpty(searchString) ? context.Foods.Where(x => x.CategoryId == categoryId).ToList() : context.Foods.Where(x => x.CategoryId == categoryId && x.FoodName.Contains(searchString)).ToList();
-                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 6);
+                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 3);
             }
             else
             {
                 var listFoods = String.IsNullOrEmpty(searchString) ? context.Foods.ToList() : context.Foods.Where(x => x.FoodName.Contains(searchString)).ToList();
-                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 6);
+                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 3);
             }
             TotalPage = foods.TotalPages;
             ViewData["categoryList"] = context.Categories.ToList();
-            ViewData["Product"] = PaginatedList<Food>.Create(foods.AsQueryable<Food>(), indexPaging, 6);
+            ViewData["Product"] = PaginatedList<Food>.Create(foods.AsQueryable<Food>(), indexPaging, 3);
         }
         /*public IActionResult OnPostAddToCart(int id)
         {
