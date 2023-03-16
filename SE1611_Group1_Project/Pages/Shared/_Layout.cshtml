@@ -24,6 +24,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-white ms-2" asp-area="" asp-page="/Index">Home</a>
                         </li>
+                         @if(ViewData["Username"] != null){
+                        <li class="nav-item">
+                            <a class="nav-link text-white ms-2" asp-area="" asp-page="/Index">Cart</a>
+                        </li>
+                         }
                         @if((ViewData["Role"] as int?) == 1)
                         {
                             <li class="nav-item">
