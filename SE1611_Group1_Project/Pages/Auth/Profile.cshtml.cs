@@ -58,15 +58,13 @@ namespace SE1611_Group1_Project.Pages.Authen
                 if (!UserExists(User.UserId))
                 {
                     return NotFound();
-                    Msg = "Update Failed!";
                 }
                 else
                 {
                     throw;
-                    Msg = "Update Failed!";
                 }
             }
-            Msg = "Update Successfull!";
+            Msg = "Update profile successfull!";
             return Page();
         }
 

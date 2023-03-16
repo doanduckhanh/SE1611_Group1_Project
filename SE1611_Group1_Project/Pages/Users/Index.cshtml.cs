@@ -22,6 +22,9 @@ namespace SE1611_Group1_Project.Pages.Users
 
         public async Task OnGetAsync()
         {
+            ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
             if (_context.Users != null)
             {
                 User = await _context.Users
