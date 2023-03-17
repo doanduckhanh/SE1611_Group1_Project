@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SE1611_Group1_Project.Models;
 
-namespace SE1611_Group1_Project.Pages.Users
+namespace SE1611_Group1_Project.Pages.Auth
 {
-    public class EditModel : PageModel
+    public class ChangePasswordModel : PageModel
     {
         private readonly SE1611_Group1_Project.Models.FoodOrderContext _context;
 
-        public EditModel(SE1611_Group1_Project.Models.FoodOrderContext context)
+        public ChangePasswordModel(SE1611_Group1_Project.Models.FoodOrderContext context)
         {
             _context = context;
         }
@@ -22,19 +22,21 @@ namespace SE1611_Group1_Project.Pages.Users
         [BindProperty]
         public User User { get; set; } = default!;
 
+        [BindProperty]
+        public string OldPassword { get; set; }
+
+        [BindProperty]
+        public string ComparePassword { get; set; }
+
+        public string MsgError { get; set; }
+        public string Msg { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
             ViewData["Role"] = HttpContext.Session.GetInt32("Role");
             ViewData["Username"] = HttpContext.Session.GetString("Username");
             ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
-            if (HttpContext.Session.GetInt32("UserId") == null)
-            {
-                Response.Redirect("/Auth/Login");
-            }
-            else if (HttpContext.Session.GetInt32("UserId") != null && HttpContext.Session.GetInt32("Role") != 1)
-            {
-                Response.Redirect("/Auth/403");
-            }
             if (id == null || _context.Users == null)
             {
                 return NotFound();
@@ -46,18 +48,33 @@ namespace SE1611_Group1_Project.Pages.Users
                 return NotFound();
             }
             User = user;
-            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
+            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
             return Page();
+        }
+
+        public void CheckOldPass()
+        {
+            if (!OldPassword.Equals(ComparePassword, StringComparison.Ordinal))
+            {
+                MsgError = "Old password not valid!";
+            }
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
+            ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+            CheckOldPass();
+
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+
 
             _context.Attach(User).State = EntityState.Modified;
 
@@ -76,8 +93,8 @@ namespace SE1611_Group1_Project.Pages.Users
                     throw;
                 }
             }
-
-            return RedirectToPage("./Index");
+            Msg = "Change password success!";
+            return Page();
         }
 
         private bool UserExists(int id)

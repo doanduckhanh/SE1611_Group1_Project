@@ -20,7 +20,18 @@ namespace SE1611_Group1_Project.Pages.Users
 
         public IActionResult OnGet()
         {
-        ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleId");
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                Response.Redirect("/Auth/Login");
+            }
+            else if (HttpContext.Session.GetInt32("UserId") != null && HttpContext.Session.GetInt32("Role") != 1)
+            {
+                Response.Redirect("/Auth/403");
+            }
+            ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
             return Page();
         }
 
@@ -31,7 +42,10 @@ namespace SE1611_Group1_Project.Pages.Users
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Users == null || User == null)
+            ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+            if (!ModelState.IsValid || _context.Users == null || User == null)
             {
                 return Page();
             }
@@ -39,7 +53,7 @@ namespace SE1611_Group1_Project.Pages.Users
             _context.Users.Add(User);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Users/Index");
         }
     }
 }

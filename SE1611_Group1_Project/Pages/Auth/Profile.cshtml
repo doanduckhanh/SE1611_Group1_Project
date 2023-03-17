@@ -4,6 +4,7 @@
     ViewData["Title"] = "Profile";
 }
 <link href="~/css/profile.css" rel="stylesheet" />
+
 <div class="container rounded bg-white mt-5 mb-5">
     <form method="post" enctype="multipart/form-data">
         <div class="row">
@@ -57,12 +58,18 @@
                             <label class="labels">Country</label>
                             <input type="text" class="form-control" asp-for="User.Country">
                         </div>
+                        @if(@Model.Msg != null){
+                            <div class="col-md-12 mt-3" >
+                                      <span class="form-control" style="background-color: #88e395; color:white;">@Model.Msg</span>
+                            </div>
+                        }
                     </div>
                 </div>
+                <div class="text-center"><button class="btn btn-primary" type="submit">Save Profile</button></div>
+
             </div>
+
         </div>
-        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
 
     </form>    
 </div>
-
