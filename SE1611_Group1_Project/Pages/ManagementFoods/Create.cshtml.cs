@@ -29,7 +29,7 @@ namespace SE1611_Group1_Project.Pages.ManagementFoods
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile file)
         {
           if (!ModelState.IsValid || _context.Foods == null || Food == null)
             {
