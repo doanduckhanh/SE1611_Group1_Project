@@ -19,13 +19,15 @@ namespace SE1611_Group1_Project.Pages.ManagementFoods
         }
 
         public IList<Food> Food { get;set; } = default!;
+        public IList<Category> Category { get; set; } = default;
 
         public async Task OnGetAsync()
         {
-            if (_context.Foods != null)
+            if (_context.Foods != null && _context.Categories != null)
             {
                 Food = await _context.Foods
                 .Include(f => f.Category).ToListAsync();
+                Category = await _context.Categories.ToListAsync();
             }
         }
     }
