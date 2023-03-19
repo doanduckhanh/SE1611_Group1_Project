@@ -22,14 +22,18 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white ms-2" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-white ms-2" asp-area="" asp-page="/Foods/Index">Home</a>
                         </li>
-                         @if(ViewData["Username"] != null){
-                        <li class="nav-item">
-                            <a class="nav-link text-white ms-2" asp-area="" asp-page="/Index">Cart</a>
-                        </li>
-                         }
-                        @if((ViewData["Role"] as int?) == 1)
+                        @{
+                            var count = @Context.Items["Count"] ?? 0;
+                        }
+                        @if (ViewData["Username"] != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white ms-2" asp-area="" asp-page="/Foods/Cart">Cart(@count)</a>
+                            </li>
+                        }
+                        @if ((ViewData["Role"] as int?) == 1)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-white ms-2" asp-area="" asp-page="/Users/Index">Staff</a>

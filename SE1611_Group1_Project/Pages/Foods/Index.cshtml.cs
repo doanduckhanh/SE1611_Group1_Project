@@ -27,8 +27,9 @@ namespace SE1611_Group1_Project.Pages.Foods
         public int TotalPage { get; set; }
         public void OnGet(int categoryId, string searchString, int indexPaging)
         {
-            /*ViewData["Role"] = HttpContext.Session.GetInt32("Role");
-            ViewData["Username"] = HttpContext.Session.GetString("Username");*/
+            ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
             if (categoryId != 0)
             {
                 var listFoods = String.IsNullOrEmpty(searchString) ? context.Foods.Where(x => x.CategoryId == categoryId).ToList() : context.Foods.Where(x => x.CategoryId == categoryId && x.FoodName.Contains(searchString)).ToList();
@@ -43,47 +44,47 @@ namespace SE1611_Group1_Project.Pages.Foods
             ViewData["categoryList"] = context.Categories.ToList();
             ViewData["Product"] = PaginatedList<Food>.Create(foods.AsQueryable<Food>(), indexPaging, 3);
         }
-        /*public IActionResult OnPostAddToCart(int id)
+        public IActionResult OnPostAddToCart(int id)
         {
-            *//*var cartId = GetCartId();
+            var cartId = GetCartId();
             AddToCart(id, cartId);
             HttpContext.Session.SetInt32("Count", new CartModel(context).GetCount());
-            return RedirectToPage("/Shopping/Cart");*//*
-        }*/
+            return RedirectToPage("/Foods/Index");
+        }
 
 
-        /*public static string GetCartId()
+        public static string GetCartId()
         {
-            if (string.IsNullOrEmpty(Settings.CartId))
+            if (string.IsNullOrEmpty(SettingsCart.CartId))
             {
-                if (!string.IsNullOrEmpty(Settings.UserName))
+                if (!string.IsNullOrEmpty(SettingsCart.UserName))
                 {
-                    Settings.CartId = Settings.UserName;
+                    SettingsCart.CartId = SettingsCart.UserName;
                 }
 
                 else
                 {
                     Guid tempCartId = Guid.NewGuid();
-                    Settings.CartId = tempCartId.ToString();
+                    SettingsCart.CartId = tempCartId.ToString();
                 }
             }
-            return Settings.CartId;
-        }*/
+            return SettingsCart.CartId;
+        }
 
-        public void AddToCart(int albumId, String ShoppingCartId)
+        public void AddToCart(int foodId, String OrderCartId)
         {
-           /* // Get the matching cart and album instances
+            // Get the matching cart and album instances
             var cartItem = context.Carts.SingleOrDefault(
-                c => c.CartId == ShoppingCartId
-                && c.AlbumId == albumId);
+                c => c.CartId == OrderCartId
+                && c.FoodId == foodId);
 
             if (cartItem == null)
             {
                 // Create a new cart item if no cart item exists
                 cartItem = new Cart
                 {
-                    AlbumId = albumId,
-                    CartId = ShoppingCartId,
+                    FoodId = foodId,
+                    CartId = OrderCartId,
                     Count = 1,
                     DateCreated = DateTime.Now
                 };
@@ -96,7 +97,7 @@ namespace SE1611_Group1_Project.Pages.Foods
                 cartItem.Count++;
             }
             // Save changes
-            context.SaveChanges();*/
+            context.SaveChanges();
         }
     }
 }
