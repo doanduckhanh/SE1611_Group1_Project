@@ -26,24 +26,29 @@
 <link rel="stylesheet" href="~/css/flaticon.css">
 <link rel="stylesheet" href="~/css/icomoon.css">
 <link rel="stylesheet" href="~/css/style.css">
-<div class="container" style="background-color:gray">
+
+<div class="container">
     <h1>Menu</h1>
     <div class="row">
     <div class="col-3">
-         <div>
-            Category: <select class="form-select" asp-for="CategoryId" asp-items="Model.Categories">
-                <option value=0>All</option>
-                @foreach (Category item in cateList)
-                {
-                    <option value=@item.CategoryId>@item.CategoryName</option>
-                }
-            </select>
-         </div>
+            <button>
+                <a style="margin-top:20px" href="/foods?CateId=0&SearchString=&IndexPaging=1"><i class="fa-solid fa-arrow-left"></i></a>
+            </button>
+       
+         
          <form style="margin-top:20px">
+                <div>
+                    Category: <select class="form-select" asp-for="CategoryId" asp-items="Model.Categories">
+                        <option value=0>All</option>
+                        @foreach (Category item in cateList)
+                        {
+                            <option value=@item.CategoryId>@item.CategoryName</option>
+                        }
+                    </select>
+                </div>
                 <input placeholder="Search" style="margin-top:20px" asp-for="SearchString" type="text"/>
                 <button style="margin-top:20px" class="btn btn-outline-success" type="submit">Search</button>
-                <br />
-                <a style="margin-top:20px" href="/foods?CateId=0&SearchString=&IndexPaging=1">Back to full list</a>
+                <br />             
         </form>
     </div>
     <div class="col-9">
