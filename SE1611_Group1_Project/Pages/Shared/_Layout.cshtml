@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SE1611_Group1_Project.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 
@@ -26,7 +27,7 @@
                         </li>
                          @if(ViewData["Username"] != null){
                         <li class="nav-item">
-                            <a class="nav-link text-white ms-2" asp-area="" asp-page="/Index">Cart</a>
+                                <a class="nav-link text-white ms-2" asp-area="" asp-page="/Index">Cart <i class="fa fa-light fa-cart-shopping"></i></a>
                         </li>
                          }
                         @if((ViewData["Role"] as int?) == 1)
@@ -56,9 +57,9 @@
                             </a>
 
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" href="/Auth/Profile?id=@ViewData["UserId"]">Profile</a></li>
-                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" href="/Auth/ChangePassword?id=@ViewData["UserId"]">Change Password</a></li>
-                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-page-handler="Logout" asp-page="/Auth/Logout" >Logout</a></li>
+                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" href="/Auth/Profile?id=@ViewData["UserId"]"><i class="fa fa-light fa-user"></i> Profile</a></li>
+                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" href="/Auth/ChangePassword?id=@ViewData["UserId"]"><i class="fa fa-light fa-lock"></i> Change Password</a></li>
+                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-page-handler="Logout" asp-page="/Auth/Logout"><i class="fa fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                             </ul>
                         </div>
                     }else{
@@ -68,7 +69,7 @@
             </div>
         </nav>
     </header>
-    <div class="content">
+    <div class="content" >
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
