@@ -8,37 +8,18 @@
     var prevDisabled = Model.IndexPaging == 1 ? "disabled" : "";
     var nextDisabled = Model.IndexPaging == Model.TotalPage ? "disabled" : "";
 }
-<link rel="stylesheet" href="~/css/open-iconic-bootstrap.min.css">
-<link rel="stylesheet" href="~/css/animate.css">
-
-<link rel="stylesheet" href="~/css/owl.carousel.min.css">
-<link rel="stylesheet" href="~/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="~/css/magnific-popup.css">
-
-<link rel="stylesheet" href="~/css/aos.css">
-
-<link rel="stylesheet" href="~/css/ionicons.min.css">
-
-<link rel="stylesheet" href="~/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="~/css/jquery.timepicker.css">
-
-
-<link rel="stylesheet" href="~/css/flaticon.css">
-<link rel="stylesheet" href="~/css/icomoon.css">
-<link rel="stylesheet" href="~/css/style.css">
-
-<div class="container">
-    <h1>Menu</h1>
+<link href="~/css/menu.css" rel="stylesheet" />
+<div class="menu">
+    <div class="row pt-5 mb-5">
+        <h1 class="text-center text-white">Menu</h1>
+    </div>
     <div class="row">
-    <div class="col-3">
-            <button>
-                <a style="margin-top:20px" href="/foods?CateId=0&SearchString=&IndexPaging=1"><i class="fa-solid fa-arrow-left"></i></a>
-            </button>
-       
-         
-         <form style="margin-top:20px">
-                <div>
-                    Category: <select class="form-select" asp-for="CategoryId" asp-items="Model.Categories">
+        <div class="col-1"></div>
+        <div class="col-2 me-3">
+            <form>
+                <p class="text-white">Category:</p>
+                <div class="input-group mt-3">
+                    <select class="form-select" asp-for="CategoryId" asp-items="Model.Categories">
                         <option value=0>All</option>
                         @foreach (Category item in cateList)
                         {
@@ -46,42 +27,53 @@
                         }
                     </select>
                 </div>
-                <input placeholder="Search" style="margin-top:20px" asp-for="SearchString" type="text"/>
-                <button style="margin-top:20px" class="btn btn-outline-success" type="submit">Search</button>
-                <br />             
-        </form>
-    </div>
-    <div class="col-9">
-<div style="margin-top: 30px">
-    <div class="row">
-        @foreach (var item in foodPaging)
-        {
-                        <div class="col-md-4">
-                            <div class="menu-entry">
-                                <img src="@item.FoodImage" alt="@item.FoodName" style="width: 250px; height: 200px" />
-                                <div class="text text-center pt-4">
-                                    <h3><a style="color:blue">@item.FoodName</a></h3>
-                                    <p>Category: @item.Category.CategoryName</p>
-                                    <p><span style="color:black">UnitPrice: @item.FoodPrice</span></p>
-                                    <p>
-                                        <form method="post">
-                                            <input type="submit" asp-page-handler="AddToCart" value="AddToCart" asp-route-id="@item.FoodId" class="btn btn-primary btn-outline-primary" />
-                                        </form>
-                                    </p>
-                                </div>
+
+                <div class="input-group mt-3">
+                    <input type="search" class="form-control rounded me-1" placeholder="Search" aria-label="Search" aria-describedby="search-addon" asp-for="SearchString" />
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-8 list-item">
+            <div class="row">
+                @foreach (var item in foodPaging)
+                {
+                    <div class="col-4 mt-2 mb-3 d-flex align-items-center justify-content-center">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="@item.FoodImage" alt="Food Image">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.FoodName</h5>
+                                <p class="card-text">Category: @item.Category.CategoryName</p>
+                                <p class="card-text">UnitPrice: @item.FoodPrice</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <form method="post">
+                                    <input type="submit" asp-page-handler="AddToCart" value="AddToCart" asp-route-id="@item.FoodId" class="btn btn-outline-primary" />
+                                </form>
                             </div>
                         </div>
-        }
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="row mt-5">
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <a href="/Foods/index?GenreId=@Model.CategoryId&SearchString=@Model.SearchString&IndexPaging=@(Model.IndexPaging-1)" class="btn btn-outline-primary me-3 btn_pre_next @prevDisabled">Previous</a>
+                    <a href="/Foods/index?GenreId=@Model.CategoryId&SearchString=@Model.SearchString&IndexPaging=@(Model.IndexPaging+1)" class="btn btn-outline-primary me-3 btn_pre_next @nextDisabled">Next</a>
+                    Page: @Model.IndexPaging/@Model.TotalPage
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
     </div>
 </div>
-<div style="margin-top: 30px" >
-                <a href="/Foods/index?GenreId=@Model.CategoryId&SearchString=@Model.SearchString&IndexPaging=@(Model.IndexPaging-1)" class="btn btn-primary btn-outline-primary @prevDisabled">Previous</a>
-                <a href="/Foods/index?GenreId=@Model.CategoryId&SearchString=@Model.SearchString&IndexPaging=@(Model.IndexPaging+1)" class="btn btn-primary btn-outline-primary @nextDisabled">Next</a>
-    Page: @Model.IndexPaging/@Model.TotalPage
-</div>
-</div>
-</div>
-</div>
+
 
 
 

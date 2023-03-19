@@ -29,19 +29,28 @@ namespace SE1611_Group1_Project.Pages.Foods
         {
             /*ViewData["Role"] = HttpContext.Session.GetInt32("Role");
             ViewData["Username"] = HttpContext.Session.GetString("Username");*/
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+            ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");
+
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                Response.Redirect("/Auth/Login");
+            }
+
             if (categoryId != 0)
             {
                 var listFoods = String.IsNullOrEmpty(searchString) ? context.Foods.Where(x => x.CategoryId == categoryId).ToList() : context.Foods.Where(x => x.CategoryId == categoryId && x.FoodName.Contains(searchString)).ToList();
-                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 3);
+                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 6);
             }
             else
             {
                 var listFoods = String.IsNullOrEmpty(searchString) ? context.Foods.ToList() : context.Foods.Where(x => x.FoodName.Contains(searchString)).ToList();
-                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 3);
+                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 6);
             }
             TotalPage = foods.TotalPages;
             ViewData["categoryList"] = context.Categories.ToList();
-            ViewData["Product"] = PaginatedList<Food>.Create(foods.AsQueryable<Food>(), indexPaging, 3);
+            ViewData["Product"] = PaginatedList<Food>.Create(foods.AsQueryable<Food>(), indexPaging, 6);
         }
         /*public IActionResult OnPostAddToCart(int id)
         {

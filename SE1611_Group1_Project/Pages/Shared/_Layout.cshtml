@@ -13,7 +13,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-black border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-black border-bottom box-shadow">
             <div class="container">
                 <a class="navbar-brand text-white fs-4" asp-area="" asp-page="/Index">Coffee Management</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -22,15 +22,17 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-white ms-2" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                         @if(ViewData["Username"] != null){
-                        <li class="nav-item">
+
+                        @if (ViewData["Username"] != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white ms-2" asp-area="" asp-page="/Foods/Index">Menu</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-white ms-2" asp-area="" asp-page="/Index">Cart <i class="fa fa-light fa-cart-shopping"></i></a>
-                        </li>
-                         }
-                        @if((ViewData["Role"] as int?) == 1)
+                            </li>
+                        }
+                        @if ((ViewData["Role"] as int?) == 1)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-white ms-2" asp-area="" asp-page="/Users/Index">Staff</a>
@@ -50,7 +52,8 @@
                             </li>
                         }
                     </ul>
-                    @if(ViewData["Username"] != null){
+                    @if (ViewData["Username"] != null)
+                    {
                         <div class="dropdown">
                             <a class="btn bg-black text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                 Hello, @ViewData["Username"]
@@ -62,15 +65,17 @@
                                 <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-page-handler="Logout" asp-page="/Auth/Logout"><i class="fa fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                             </ul>
                         </div>
-                    }else{
-                         <a class="text-white text-decoration-none" asp-are="" asp-page="/Auth/Login">Login</a>
+                    }
+                    else
+                    {
+                        <a class="text-white text-decoration-none" asp-are="" asp-page="/Auth/Login">Login</a>
                     }
                 </div>
             </div>
         </nav>
     </header>
-    <div class="content" >
-        <main role="main" class="pb-3">
+    <div class="content">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
