@@ -8,14 +8,13 @@
     var prevDisabled = Model.IndexPaging == 1 ? "disabled" : "";
     var nextDisabled = Model.IndexPaging == Model.TotalPage ? "disabled" : "";
 }
-<link href="~/css/menu.css" rel="stylesheet" />
+<link href="~/css/Menu.css" rel="stylesheet" />
 <div class="menu">
-    <div class="row pt-5 mb-5">
-        <h1 class="text-center text-white">Menu</h1>
+    <div class="row pt-5 mb-5 me-0 ms-0">
+        <h1 class="text-center text-white ">Menu</h1>
     </div>
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-2 me-3">
+    <div class="row pe-0 me-0 ms-0">
+        <div class="col-2 ms-5 me-5 ps-5">
             <form>
                 <p class="text-white">Category:</p>
                 <div class="input-group mt-3">
@@ -30,7 +29,7 @@
 
                 <div class="input-group mt-3">
                     <input type="search" class="form-control rounded me-1" placeholder="Search" aria-label="Search" aria-describedby="search-addon" asp-for="SearchString" />
-                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                    <button type="submit" class="btn btn-outline-primary btn_custom">Search</button>
                 </div>
             </form>
         </div>
@@ -48,7 +47,7 @@
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-2">
                                 <form method="post">
-                                    <input type="submit" asp-page-handler="AddToCart" value="AddToCart" asp-route-id="@item.FoodId" class="btn btn-outline-primary" />
+                                    <input type="submit" asp-page-handler="AddToCart" value="AddToCart" asp-route-id="@item.FoodId" class="btn btn-outline-primary btn_custom" />
                                 </form>
                             </div>
                         </div>
@@ -58,14 +57,13 @@
         </div>
         <div class="col-1"></div>
     </div>
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-2"></div>
+    <div class="row me-0 ms-0">
+        <div class="col-2 ms-5 me-5 ps-5"></div>
         <div class="col-8">
             <div class="row mt-5">
-                <div class="col-12 d-flex align-items-center justify-content-center">
-                    <a href="/Foods/index?GenreId=@Model.CategoryId&SearchString=@Model.SearchString&IndexPaging=@(Model.IndexPaging-1)" class="btn btn-outline-primary me-3 btn_pre_next @prevDisabled">Previous</a>
-                    <a href="/Foods/index?GenreId=@Model.CategoryId&SearchString=@Model.SearchString&IndexPaging=@(Model.IndexPaging+1)" class="btn btn-outline-primary me-3 btn_pre_next @nextDisabled">Next</a>
+                <div class="col-12 d-flex align-items-center justify-content-center text-white">
+                    <a href="/Foods/index?GenreId=@Model.CategoryId&SearchString=@Model.SearchString&IndexPaging=@(Model.IndexPaging-1)" class="btn btn-outline-primary me-3 btn_custom btn_pre_next @prevDisabled">Previous</a>
+                    <a href="/Foods/index?GenreId=@Model.CategoryId&SearchString=@Model.SearchString&IndexPaging=@(Model.IndexPaging+1)" class="btn btn-outline-primary me-3 btn_custom btn_pre_next @nextDisabled">Next</a>
                     Page: @Model.IndexPaging/@Model.TotalPage
                 </div>
             </div>

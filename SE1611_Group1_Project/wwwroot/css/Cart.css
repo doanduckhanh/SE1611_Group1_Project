@@ -9,11 +9,15 @@
     display: flex;
     flex-wrap: nowrap; /* add this line */
     align-items: center;
+    min-height: 88vh
 }
 .title {
     margin-bottom: 5vh;
 }
-
+.main-cart{
+    min-height: 89vh;
+    display: flex
+}
 .card {
     margin: auto;
     max-width: 950px;

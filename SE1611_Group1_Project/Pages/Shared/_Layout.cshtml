@@ -22,14 +22,17 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-
+                        @{
+                            var count = @Context.Items["Count"] ?? 0;
+                        }
                         @if (ViewData["Username"] != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-white ms-2" asp-area="" asp-page="/Foods/Index">Menu</a>
                             </li>
+                           
                             <li class="nav-item">
-                                <a class="nav-link text-white ms-2" asp-area="" asp-page="/Index">Cart <i class="fa fa-light fa-cart-shopping"></i></a>
+                                <a class="nav-link text-white ms-2" asp-area="" asp-page="/Foods/Cart">Cart <i class="fa fa-light fa-cart-shopping"></i>@count</a>
                             </li>
                         }
                         @if ((ViewData["Role"] as int?) == 1)
