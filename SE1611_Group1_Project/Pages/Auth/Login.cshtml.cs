@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using NuGet.Configuration;
 using SE1611_Group1_Project.Models;
+using SE1611_Group1_Project.Pages.Foods;
+using SE1611_Group1_Project.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace SE1611_Group1_Project.Pages.Login
@@ -34,6 +37,10 @@ namespace SE1611_Group1_Project.Pages.Login
 					HttpContext.Session.SetString("Username", user.UserName);
                     HttpContext.Session.SetString("Password", user.Password);
 
+                    //-----------------------------
+                    SettingsCart.UserName = HttpContext.Session.GetString("Username");
+                    MigrateCart();
+                    HttpContext.Session.SetInt32("Count", new CartModel(_context).GetCount());
                     return RedirectToPage("/Index");
 				}
 				else
@@ -49,5 +56,25 @@ namespace SE1611_Group1_Project.Pages.Login
 			}
 		}
 
-	}
+        public void MigrateCart()
+        {
+            var shoppingCart = _context.Carts.Where(c => c.CartId == SettingsCart.CartId).ToList();
+            foreach (Cart item in shoppingCart)
+            {
+                Cart userCartItem = _context.Carts.FirstOrDefault(c => c.CartId == SettingsCart.UserName && c.FoodId == item.FoodId);
+                if (userCartItem != null)
+                {
+                    userCartItem.Count += item.Count;
+                    _context.Carts.Remove(item);
+                }
+                else
+                {
+                    item.CartId = SettingsCart.UserName;
+                }
+            }
+            _context.SaveChanges();
+            SettingsCart.CartId = SettingsCart.UserName;
+        }
+
+    }
 }
