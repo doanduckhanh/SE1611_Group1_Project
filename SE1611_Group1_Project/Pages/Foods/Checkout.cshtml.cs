@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NuGet.Configuration;
@@ -14,19 +15,38 @@ namespace SE1611_Group1_Project.Pages.Foods
         FoodOrderContext foodOrderContext = new FoodOrderContext(); 
         [BindProperty(SupportsGet = true)]
         public decimal total { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string promocode { get; set; }
+        [BindProperty(SupportsGet = true)]
         public List<OrderDetailDTO> orderDetailDTOs { get; set; } = new List<OrderDetailDTO>();
         public void OnGet()
         {
             ViewData["Role"] = HttpContext.Session.GetInt32("Role");
             ViewData["Username"] = HttpContext.Session.GetString("Username");
             ViewData["Total"] = HttpContext.Session.GetString("Total");
+            orderDetailDTOs = JsonSerializer.Deserialize<List<OrderDetailDTO>>(HttpContext.Session.GetString("OrderDetailList"));
+            if (HttpContext.Session.GetString("CodePromo") != null)
+            {
+                promocode = HttpContext.Session.GetString("CodePromo");
+            }
+            else
+            {
+                promocode = "";
+            }
         }
         public async Task<IActionResult> OnPost()
         {
             orderDetailDTOs = JsonSerializer.Deserialize<List<OrderDetailDTO>>(HttpContext.Session.GetString("OrderDetailList"));
             Order order = new Order();
             order.OrderDate = DateTime.Now;
-            order.PromoCode = null;
+            if(HttpContext.Session.GetString("CodePromo") != null)
+            {
+                promocode = HttpContext.Session.GetString("CodePromo");
+            } else
+            {
+                promocode = "";
+            }
+            order.PromoCode = promocode;
             order.UserName = HttpContext.Session.GetString("Username");
             total = Decimal.Parse(HttpContext.Session.GetString("Total"));
             order.Total = total;

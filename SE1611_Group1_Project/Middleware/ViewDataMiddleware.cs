@@ -17,6 +17,7 @@ namespace SE1611_Group1_Project.Middleware
         public async Task InvokeAsync(HttpContext httpContext)
         {
             httpContext.Items["Count"] = httpContext.Session.GetInt32("Count");
+            httpContext.Items["OrderDetailList"] = httpContext.Session.GetString("OrderDetailList");
             await _next(httpContext);
         }
     }

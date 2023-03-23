@@ -40,12 +40,12 @@ namespace SE1611_Group1_Project.Pages.Foods
 
             if (categoryId != 0)
             {
-                var listFoods = String.IsNullOrEmpty(searchString) ? context.Foods.Where(x => x.CategoryId == categoryId).ToList() : context.Foods.Where(x => x.CategoryId == categoryId && x.FoodName.Contains(searchString)).ToList();
+                var listFoods = String.IsNullOrEmpty(searchString) ? context.Foods.Where(x => x.CategoryId == categoryId && x.FoodStatus != 0).ToList() : context.Foods.Where(x => x.CategoryId == categoryId && x.FoodName.Contains(searchString) && x.FoodStatus != 0).ToList();
                 foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 6);
             }
             else
             {
-                var listFoods = String.IsNullOrEmpty(searchString) ? context.Foods.ToList() : context.Foods.Where(x => x.FoodName.Contains(searchString)).ToList();
+                var listFoods = String.IsNullOrEmpty(searchString) ? context.Foods.ToList() : context.Foods.Where(x => x.FoodName.Contains(searchString) && x.FoodStatus != 0).ToList();
                 foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 6);
             }
             TotalPage = foods.TotalPages;

@@ -3,10 +3,11 @@
 @model SE1611_Group1_Project.Pages.Foods.CheckoutModel
 @{
     FoodOrderContext foodOrderContext = new FoodOrderContext();
-    int i = 0;
+    int i = 1;
 }
 <div class="container">
-    <table class="table table-hover">
+    <h2 style="margin-top:10px">Bill Export</h2>
+    <table class="table table-hover" style="margin-top:10px">
         <thead>
             <tr class="table-primary">
                 <th scope="col">Number</th>
@@ -20,11 +21,18 @@
             @foreach(var item in Model.orderDetailDTOs)
             {
                 <tr>
-                    <th scope="row">@i++</th>
+                    <th scope="row">@i</th>
                     <td>@foodOrderContext.Foods.FirstOrDefault(x => x.FoodId == item.FoodId).FoodName</td>
                     <td>@item.UnitPrice</td>
                     <td>@item.Quantity</td>
-                    <td>@item.UnitPrice * @item.Quantity</td>
+                    <td>@{
+                            var quantity = item.Quantity;
+                            var unitprice = item.UnitPrice;
+                            var sum = quantity * unitprice;
+                        }
+                        @sum
+                    </td>
+                    @{i++;}
                 </tr>
             }
             
@@ -32,7 +40,8 @@
     </table>
     <center>
         <div>
-            <h2>Total : @Model.total</h2>
+            <h2>Total : @ViewData["Total"]</h2>
+            <h3>Promo Code : @Model.promocode</h3>
         </div>
         <form method="post">
             <input type="submit" value="Order" class="btn btn-primary" />
