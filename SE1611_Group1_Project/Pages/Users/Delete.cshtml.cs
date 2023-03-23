@@ -21,6 +21,8 @@ namespace SE1611_Group1_Project.Pages.Users
 
         [BindProperty]
       public User User { get; set; } = default!;
+        private List<User> allUsers { get; set; } = default!;
+
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -57,11 +59,19 @@ namespace SE1611_Group1_Project.Pages.Users
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+            if ((ViewData["UserId"] as int?) == id)
+            {
+                TempData["Message"] = "You can not delete yourself!!";
+                return RedirectToPage("/Users/Delete?id=" + id);
+            }
+          
             if (id == null || _context.Users == null)
             {
                 return NotFound();
             }
             var user = await _context.Users.FindAsync(id);
+
 
             if (user != null)
             {

@@ -13,7 +13,7 @@
             <p class="fs-2 fw-bold text-center">Staff Registration</p>
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-               
+
                 <div class="form-group">
                     <label asp-for="User.FirstName" class="control-label"></label>
                     <input required asp-for="User.FirstName" class="form-control" />
@@ -31,7 +31,9 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="User.Password" class="control-label"></label>
-                    <input required asp-for="User.Password" class="form-control" />
+                    <input type="password" required asp-for="User.Password"
+                           minlength="6"
+                           class="form-control" />
                     <span asp-validation-for="User.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -56,12 +58,15 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="User.Phone" class="control-label"></label>
-                    <input required asp-for="User.Phone" class="form-control" />
+                    <input required asp-for="User.Phone"
+                           data-val="true" data-val-regex="Please enter a valid phone number."
+                           data-val-regex-pattern="^(\+?\d{1,3}[- ]?)?\d{10}$" class="form-control" />
                     <span asp-validation-for="User.Phone" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="User.Email" class="control-label"></label>
-                    <input required asp-for="User.Email" class="form-control" />
+                    <input required asp-for="User.Email"
+                           data-val="true" data-val-email="Please enter a valid email address." class="form-control" />
                     <span asp-validation-for="User.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -81,5 +86,7 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
