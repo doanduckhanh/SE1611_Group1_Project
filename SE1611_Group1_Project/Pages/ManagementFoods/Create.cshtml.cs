@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SE1611_Group1_A3.FileUploadService;
+using SE1611_Group1_Project.FileUploadService;
 using SE1611_Group1_Project.Models;
 
 namespace SE1611_Group1_Project.Pages.ManagementFoods
