@@ -69,8 +69,9 @@ namespace SE1611_Group1_Project.Pages.Foods
                 {
                     total -= int.Parse(promo.PromoValue);
                 }
+                HttpContext.Session.SetString("CodePromo", Code.ToString());
             }
-
+            HttpContext.Session.SetString("CodePromo", null);
             return total ?? 0;
         }
         public int GetCount()
@@ -129,7 +130,7 @@ namespace SE1611_Group1_Project.Pages.Foods
             HttpContext.Session.SetInt32("Count", GetCount());
 
             HttpContext.Session.SetString("Total", total.ToString());
-            HttpContext.Session.SetString("CodePromo", Code.ToString());
+            
             ViewData["Total"] = HttpContext.Session.GetString("Total");
 
             var promo = _context.Promos.SingleOrDefault(
