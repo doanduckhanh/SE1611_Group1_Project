@@ -15,16 +15,18 @@ namespace SE1611_Group1_Project.Pages.ManagementFoods
     {
         private readonly SE1611_Group1_Project.Models.FoodOrderContext _context;
         private readonly IFileUploadService fileUploadService;
-        public string filePath { get; set; } = default!;
+        private readonly ILogger<IndexModel> _logger;
 
-        public EditModel(SE1611_Group1_Project.Models.FoodOrderContext context, IFileUploadService fileUploadService)
+        public EditModel(SE1611_Group1_Project.Models.FoodOrderContext context, IFileUploadService fileUploadService, ILogger<IndexModel> logger)
         {
+            _logger= logger;
             _context = context;
             this.fileUploadService = fileUploadService;
         }
 
         [BindProperty]
         public Food Food { get; set; } = default!;
+        public List<Category> listCategories { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -34,14 +36,13 @@ namespace SE1611_Group1_Project.Pages.ManagementFoods
             }
 
             var food =  await _context.Foods.FirstOrDefaultAsync(m => m.FoodId == id);
+            listCategories =  _context.Categories.ToList();
             if (food == null)
             {
                 return NotFound();
             }
             Food = food;
-            filePath = Food.FoodImage;
            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
-            filePath = Food.FoodImage;
             return Page();
         }
 
@@ -49,40 +50,21 @@ namespace SE1611_Group1_Project.Pages.ManagementFoods
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync(IFormFile file)
         {
-            if (!ModelState.IsValid)
+            if (file != null)
             {
-                return Page();
-            }
-
-            _context.Attach(Food).State = EntityState.Modified;
-
-            try
-            {
-                if (file != null)
-                {
-                    filePath = await fileUploadService.UploadFileAsync(file);
-                    Food.FoodImage = filePath.Substring(filePath.IndexOf(@"\images"));
-                }
-                else
-                {
-                    return Page();
-                }
+                string filePath = await fileUploadService.UploadFileAsync(file);
+                Food.FoodImage = filePath.Substring(filePath.IndexOf(@"\images"));
                 _context.Foods.Update(Food);
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!FoodExists(Food.FoodId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                _context.Foods.Update(Food);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-
-            return RedirectToPage("./Index");
+           
         }
 
         private bool FoodExists(int id)

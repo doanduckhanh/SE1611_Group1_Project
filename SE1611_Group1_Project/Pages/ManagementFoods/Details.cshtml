@@ -27,7 +27,7 @@
             @Html.DisplayNameFor(model => model.Food.FoodImage)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Food.FoodImage)
+            <div class="w-75"><img class="w-50" src="@Model.Food.FoodImage" /></div>
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Food.FoodStatus)
@@ -39,7 +39,7 @@
             @Html.DisplayNameFor(model => model.Food.Category)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Food.Category.CategoryId)
+            @Html.DisplayFor(model => model.Food.Category.CategoryName)
         </dd>
     </dl>
 </div>
