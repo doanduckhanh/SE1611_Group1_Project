@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SE1611_Group1_Project.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-black border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-black border-bottom box-shadow">
             <div class="container">
                 <a class="navbar-brand text-white fs-4" asp-area="" asp-page="/Index">Coffee Management</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -21,16 +22,17 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-white ms-2" asp-area="" asp-page="/Foods/Index">Home</a>
-                        </li>
                         @{
                             var count = @Context.Items["Count"] ?? 0;
                         }
                         @if (ViewData["Username"] != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white ms-2" asp-area="" asp-page="/Foods/Cart">Cart(@count)</a>
+                                <a class="nav-link text-white ms-2" asp-area="" asp-page="/Foods/Index">Menu</a>
+                            </li>
+                           
+                            <li class="nav-item">
+                                <a class="nav-link text-white ms-2" asp-area="" asp-page="/Foods/Cart">Cart <i class="fa fa-light fa-cart-shopping"></i>@count</a>
                             </li>
                         }
                         @if ((ViewData["Role"] as int?) == 1)
@@ -53,27 +55,30 @@
                             </li>
                         }
                     </ul>
-                    @if(ViewData["Username"] != null){
+                    @if (ViewData["Username"] != null)
+                    {
                         <div class="dropdown">
                             <a class="btn bg-black text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                 Hello, @ViewData["Username"]
                             </a>
 
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" href="/Auth/Profile?id=@ViewData["UserId"]">Profile</a></li>
-                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" href="/Auth/ChangePassword?id=@ViewData["UserId"]">Change Password</a></li>
-                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-page-handler="Logout" asp-page="/Auth/Logout" >Logout</a></li>
+                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" href="/Auth/Profile?id=@ViewData["UserId"]"><i class="fa fa-light fa-user"></i> Profile</a></li>
+                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-are="" href="/Auth/ChangePassword?id=@ViewData["UserId"]"><i class="fa fa-light fa-lock"></i> Change Password</a></li>
+                                <li><a class="dropdown-item bg-white text-black text-decoration-none" asp-page-handler="Logout" asp-page="/Auth/Logout"><i class="fa fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                             </ul>
                         </div>
-                    }else{
-                         <a class="text-white text-decoration-none" asp-are="" asp-page="/Auth/Login">Login</a>
+                    }
+                    else
+                    {
+                        <a class="text-white text-decoration-none" asp-are="" asp-page="/Auth/Login">Login</a>
                     }
                 </div>
             </div>
         </nav>
     </header>
     <div class="content">
-        <main role="main" class="pb-3">
+        <main role="main">
             @RenderBody()
         </main>
     </div>

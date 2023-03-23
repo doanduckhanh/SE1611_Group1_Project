@@ -1,6 +1,6 @@
 ﻿using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
-namespace SE1611_Group1_A3.FileUploadService
+namespace SE1611_Group1_Project.FileUploadService
 {
     public class LocalFileUploadService : IFileUploadService
     {

@@ -27,64 +27,72 @@ namespace SE1611_Group1_Project.Pages.Foods
         public int TotalPage { get; set; }
         public void OnGet(int categoryId, string searchString, int indexPaging)
         {
+            /*ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");*/
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
             ViewData["Role"] = HttpContext.Session.GetInt32("Role");
             ViewData["Username"] = HttpContext.Session.GetString("Username");
-            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                Response.Redirect("/Auth/Login");
+            }
+
             if (categoryId != 0)
             {
                 var listFoods = String.IsNullOrEmpty(searchString) ? context.Foods.Where(x => x.CategoryId == categoryId).ToList() : context.Foods.Where(x => x.CategoryId == categoryId && x.FoodName.Contains(searchString)).ToList();
-                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 3);
+                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 6);
             }
             else
             {
                 var listFoods = String.IsNullOrEmpty(searchString) ? context.Foods.ToList() : context.Foods.Where(x => x.FoodName.Contains(searchString)).ToList();
-                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 3);
+                foods = new PaginatedList<Food>(listFoods, listFoods.Count, 1, 6);
             }
             TotalPage = foods.TotalPages;
             ViewData["categoryList"] = context.Categories.ToList();
-            ViewData["Product"] = PaginatedList<Food>.Create(foods.AsQueryable<Food>(), indexPaging, 3);
+            ViewData["Product"] = PaginatedList<Food>.Create(foods.AsQueryable<Food>(), indexPaging, 6);
         }
-        public IActionResult OnPostAddToCart(int id)
+        /*public IActionResult OnPostAddToCart(int id)
         {
-            var cartId = GetCartId();
+            *//*var cartId = GetCartId();
             AddToCart(id, cartId);
             HttpContext.Session.SetInt32("Count", new CartModel(context).GetCount());
-            return RedirectToPage("/Foods/Index");
-        }
+            return RedirectToPage("/Shopping/Cart");*//*
+        }*/
 
 
-        public static string GetCartId()
+        /*public static string GetCartId()
         {
-            if (string.IsNullOrEmpty(SettingsCart.CartId))
+            if (string.IsNullOrEmpty(Settings.CartId))
             {
-                if (!string.IsNullOrEmpty(SettingsCart.UserName))
+                if (!string.IsNullOrEmpty(Settings.UserName))
                 {
-                    SettingsCart.CartId = SettingsCart.UserName;
+                    Settings.CartId = Settings.UserName;
                 }
 
                 else
                 {
                     Guid tempCartId = Guid.NewGuid();
-                    SettingsCart.CartId = tempCartId.ToString();
+                    Settings.CartId = tempCartId.ToString();
                 }
             }
-            return SettingsCart.CartId;
-        }
+            return Settings.CartId;
+        }*/
 
-        public void AddToCart(int foodId, String OrderCartId)
+        public void AddToCart(int albumId, String ShoppingCartId)
         {
-            // Get the matching cart and album instances
+           /* // Get the matching cart and album instances
             var cartItem = context.Carts.SingleOrDefault(
-                c => c.CartId == OrderCartId
-                && c.FoodId == foodId);
+                c => c.CartId == ShoppingCartId
+                && c.AlbumId == albumId);
 
             if (cartItem == null)
             {
                 // Create a new cart item if no cart item exists
                 cartItem = new Cart
                 {
-                    FoodId = foodId,
-                    CartId = OrderCartId,
+                    AlbumId = albumId,
+                    CartId = ShoppingCartId,
                     Count = 1,
                     DateCreated = DateTime.Now
                 };
@@ -97,7 +105,7 @@ namespace SE1611_Group1_Project.Pages.Foods
                 cartItem.Count++;
             }
             // Save changes
-            context.SaveChanges();
+            context.SaveChanges();*/
         }
     }
 }
