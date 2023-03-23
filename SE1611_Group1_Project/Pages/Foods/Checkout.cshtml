@@ -1,6 +1,9 @@
 ﻿@page
+@using SE1611_Group1_Project.Models;
 @model SE1611_Group1_Project.Pages.Foods.CheckoutModel
 @{
+    FoodOrderContext foodOrderContext = new FoodOrderContext();
+    int i = 0;
 }
 <div class="container">
     <table class="table table-hover">
@@ -14,20 +17,26 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Coffee</td>
-                <td>25000</td>
-                <td>2</td>
-                <td>50000</td>
-            </tr>
+            @foreach(var item in Model.orderDetailDTOs)
+            {
+                <tr>
+                    <th scope="row">@i++</th>
+                    <td>@foodOrderContext.Foods.FirstOrDefault(x => x.FoodId == item.FoodId).FoodName</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitPrice * @item.Quantity</td>
+                </tr>
+            }
+            
         </tbody>
     </table>
     <center>
         <div>
-            <h2>Total : 50000</h2>
+            <h2>Total : @Model.total</h2>
         </div>
-        <button class="btn btn-outline-primary">Order</button>
+        <form method="post">
+            <input type="submit" value="Order" class="btn btn-primary" />
+        </form>
     </center>
     
 </div>
