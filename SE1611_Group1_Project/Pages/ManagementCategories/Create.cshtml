@@ -15,12 +15,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Category.CategoryName" class="control-label"></label>
-                <input asp-for="Category.CategoryName" class="form-control" />
+                <input asp-for="Category.CategoryName" required class="form-control" />
                 <span asp-validation-for="Category.CategoryName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Category.CategoryDescription" class="control-label"></label>
-                <input asp-for="Category.CategoryDescription" class="form-control" />
+                <input asp-for="Category.CategoryDescription" required class="form-control" />
                 <span asp-validation-for="Category.CategoryDescription" class="text-danger"></span>
             </div>
             <div class="form-group">

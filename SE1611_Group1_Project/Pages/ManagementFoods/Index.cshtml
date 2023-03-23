@@ -44,15 +44,22 @@
                 <div style="width:200px"><img class="w-100" src="@item.FoodImage"/></div>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FoodStatus)
-            </td>
+                    @if (item.FoodStatus == 0)
+                    {
+                        <p>Deactived</p>
+                    }
+                    else
+                    {
+                        <p>Actived</p>
+                    }
+                </td>
             <td>
                     @Html.DisplayFor(modelItem => item.Category.CategoryName)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.FoodId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.FoodId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.FoodId">Delete</a>
+@*                <a asp-page="./Delete" asp-route-id="@item.FoodId">Delete</a>*@
             </td>
         </tr>
 }
