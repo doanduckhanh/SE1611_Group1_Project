@@ -14,12 +14,14 @@ namespace SE1611_Group1_Project.Pages.ManagementFoods
     {
         private readonly SE1611_Group1_Project.Models.FoodOrderContext _context;
         private readonly IFileUploadService fileUploadService;
+        private readonly ILogger<IndexModel> _logger;
         public string filePath { get; set; } = default!;
 
-        public CreateModel(SE1611_Group1_Project.Models.FoodOrderContext context,IFileUploadService fileUploadService)
+        public CreateModel(SE1611_Group1_Project.Models.FoodOrderContext context,IFileUploadService fileUploadService, ILogger<IndexModel> logger)
         {
             _context = context;
             this.fileUploadService = fileUploadService;
+            _logger = logger;
         }
 
         public IActionResult OnGet()
