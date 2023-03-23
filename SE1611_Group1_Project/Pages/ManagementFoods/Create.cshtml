@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post"  enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Food.FoodName" class="control-label"></label>
@@ -25,7 +25,14 @@
             </div>
             <div class="form-group">
                 <label class="form-label">Choose image</label>
-                <input  class="form-control" required type="file" name="file"/>
+                <input id="btnChoose" class="form-control"  required type="file" name="file" />
+            </div>
+            @if (TempData.ContainsKey("Message"))
+            {
+                <div class="alert alert-success">@TempData["Message"]</div>
+            }
+            <div style="width:170px">
+                <img class="w-100" id="blah" src="#" alt="your image" />
             </div>
             <div class="form-group">
                 <label asp-for="Food.FoodStatus" class="control-label"></label>
@@ -51,3 +58,11 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 }
+<script>
+    btnChoose.onchange = evt => {
+        const [file] = btnChoose.files
+  if (file) {
+    blah.src = URL.createObjectURL(file)
+  }
+}
+</script>
