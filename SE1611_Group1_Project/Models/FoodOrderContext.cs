@@ -180,7 +180,7 @@ namespace SE1611_Group1_Project.Models
             modelBuilder.Entity<Promo>(entity =>
             {
                 entity.HasKey(e => e.PromoCode)
-                    .HasName("PK__Promo__32DBED349AE99C05");
+                    .HasName("PK__Promo__32DBED341B229F54");
 
                 entity.ToTable("Promo");
 

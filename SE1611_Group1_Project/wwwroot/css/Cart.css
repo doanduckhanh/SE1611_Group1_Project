@@ -5,19 +5,23 @@
     background: url('../images/bg-1.jpg')no-repeat center;
     background-size: cover;
 }
+
 .main {
     display: flex;
     flex-wrap: nowrap; /* add this line */
     align-items: center;
-    min-height: 88vh
 }
+
 .title {
     margin-bottom: 5vh;
 }
-.main-cart{
+
+.main-cart {
     min-height: 89vh;
-    display: flex
+    display: flex;
+    padding-bottom: 40px;
 }
+
 .card {
     margin: auto;
     max-width: 950px;
@@ -172,13 +176,12 @@ input {
     transition: none;
 }
 
-    .btn:hover {
-        color: white;
-    }
+.btn:hover {
+    color: white;
+}
 
 a {
     color: black;
-
 }
 
     a:hover {

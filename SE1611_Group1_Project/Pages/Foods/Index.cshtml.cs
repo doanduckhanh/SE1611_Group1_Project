@@ -8,7 +8,7 @@ namespace SE1611_Group1_Project.Pages.Foods
     public class IndexModel : PageModel
     {
         public static FoodOrderContext context = new FoodOrderContext();
-        PaginatedList<Food> foods = new PaginatedList<Food>(context.Foods.ToList(), context.Foods.Count(), 1, 3);
+        PaginatedList<Food> foods = new PaginatedList<Food>(context.Foods.ToList(), context.Foods.Count(), 1, 6);
 
         [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
