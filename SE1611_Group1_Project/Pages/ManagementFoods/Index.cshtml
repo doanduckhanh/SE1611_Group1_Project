@@ -1,0 +1,60 @@
+﻿@page
+@model SE1611_Group1_Project.Pages.ManagementFoods.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Food[0].FoodName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Food[0].FoodPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Food[0].FoodImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Food[0].FoodStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Food[0].Category)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Food) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.FoodId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.FoodId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.FoodId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

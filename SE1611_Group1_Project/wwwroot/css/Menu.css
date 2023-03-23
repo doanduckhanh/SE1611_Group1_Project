@@ -1,0 +1,94 @@
+﻿body {
+    background: url('../images/bg-1.jpg')no-repeat center;
+    background-size: cover;
+    /*background-color: #e9b173;
+    min-height: 88vh;*/
+}
+
+.btn_custom {
+    color: burlywood;
+    border: 1px solid burlywood;
+}
+
+    .btn_custom:hover {
+        background-color: burlywood;
+        border: 1px solid burlywood;
+    }
+
+btn-outline-primary:disabled {
+    color: burlywood;
+    background-color: transparent;
+} 
+
+
+.menu .list-item {
+    border-left: 1px solid white;
+}
+
+.menu .card {
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+    .menu .card .card-img-top {
+        border-radius: 5px 5px 0 0;
+    }
+
+    .menu .card .card-body {
+        text-align: start;
+    }
+
+        .menu .card .card-body .card-title {
+            margin-bottom: 1rem;
+        }
+
+.menu .btn_pre_next {
+    width: 100px;
+}
+body {
+    background: url('../images/bg-1.jpg')no-repeat center;
+    background-size: cover;
+    /*background-color: #e9b173;
+    min-height: 88vh;*/
+}
+
+.btn_custom {
+    color: burlywood;
+    border: 1px solid burlywood;
+}
+
+    .btn_custom:hover {
+        background-color: burlywood;
+        border: 1px solid burlywood;
+    }
+
+.btn-outline-primary.disabled, .btn-outline-primary:disabled {
+    color: burlywood;
+    background-color: transparent;
+} 
+
+
+.menu .list-item {
+    border-left: 1px solid white;
+}
+
+.menu .card {
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+    .menu .card .card-img-top {
+        border-radius: 5px 5px 0 0;
+    }
+
+    .menu .card .card-body {
+        text-align: start;
+    }
+
+        .menu .card .card-body .card-title {
+            margin-bottom: 1rem;
+        }
+
+.menu .btn_pre_next {
+    width: 100px;
+}
