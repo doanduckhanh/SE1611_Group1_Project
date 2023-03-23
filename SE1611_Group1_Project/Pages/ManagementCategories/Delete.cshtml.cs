@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SE1611_Group1_Project.Models;
 
-namespace SE1611_Group1_Project.Pages.ManagementFoods
+namespace SE1611_Group1_Project.Pages.ManagementCategories
 {
     public class DeleteModel : PageModel
     {
@@ -19,46 +19,43 @@ namespace SE1611_Group1_Project.Pages.ManagementFoods
         }
 
         [BindProperty]
-      public Food Food { get; set; } = default!;
+      public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Foods == null)
+            if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
 
-            var food = await _context.Foods.FirstOrDefaultAsync(m => m.FoodId == id);
+            var category = await _context.Categories.FirstOrDefaultAsync(m => m.CategoryId == id);
 
-            if (food == null)
+            if (category == null)
             {
                 return NotFound();
             }
             else 
             {
-                Food = food;
+                Category = category;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Foods == null)
+            if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
-            var food = await _context.Foods.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
 
-            if (food != null)
+            if (category != null)
             {
-                Food = food;
-                var carts = _context.Carts.Where(x => x.FoodId == food.FoodId);
-                _context.Carts.RemoveRange(carts);
-                var orderDetails = _context.OrderDetails.Where(x => x.FoodId == food.FoodId);
-                _context.OrderDetails.RemoveRange(orderDetails);
-                _context.Foods.Remove(Food);
+                Category = category;
+                _context.Categories.Remove(Category);
                 await _context.SaveChangesAsync();
             }
+
             return RedirectToPage("./Index");
         }
     }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SE1611_Group1_Project.Models;
 
-namespace SE1611_Group1_Project.Pages.ManagementFoods
+namespace SE1611_Group1_Project.Pages.ManagementCategories
 {
     public class DetailsModel : PageModel
     {
@@ -18,25 +18,23 @@ namespace SE1611_Group1_Project.Pages.ManagementFoods
             _context = context;
         }
 
-      public Food Food { get; set; } = default!;
-        public List<Category> listCategories { get; set; } = default!;
+      public Category Category { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            listCategories = _context.Categories.ToList();
-            if (id == null || _context.Foods == null)
+            if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
 
-            var food = await _context.Foods.FirstOrDefaultAsync(m => m.FoodId == id);
-            if (food == null)
+            var category = await _context.Categories.FirstOrDefaultAsync(m => m.CategoryId == id);
+            if (category == null)
             {
                 return NotFound();
             }
             else 
             {
-                Food = food;
+                Category = category;
             }
             return Page();
         }
