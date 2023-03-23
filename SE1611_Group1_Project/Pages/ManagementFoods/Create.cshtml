@@ -11,31 +11,30 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Food.FoodName" class="control-label"></label>
-                <input asp-for="Food.FoodName" class="form-control" />
+                <input asp-for="Food.FoodName" required class="form-control" />
                 <span asp-validation-for="Food.FoodName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Food.FoodPrice" class="control-label"></label>
-                <input asp-for="Food.FoodPrice" class="form-control" />
+                <input asp-for="Food.FoodPrice" required class="form-control" />
                 <span asp-validation-for="Food.FoodPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Food.FoodImage" class="control-label"></label>
-                <input asp-for="Food.FoodImage" class="form-control" />
-                <span asp-validation-for="Food.FoodImage" class="text-danger"></span>
+                <label class="form-label">Choose image</label>
+                <input  class="form-control" required type="file" name="file"/>
             </div>
             <div class="form-group">
                 <label asp-for="Food.FoodStatus" class="control-label"></label>
-                <input asp-for="Food.FoodStatus" class="form-control" />
+                <input asp-for="Food.FoodStatus"  class="form-control" />
                 <span asp-validation-for="Food.FoodStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Food.CategoryId" class="control-label"></label>
-                <select asp-for="Food.CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                <select asp-for="Food.CategoryId" required class="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -50,4 +49,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 }
