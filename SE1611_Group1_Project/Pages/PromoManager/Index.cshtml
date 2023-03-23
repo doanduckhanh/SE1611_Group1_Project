@@ -1,0 +1,54 @@
+﻿@page
+@model SE1611_Group1_Project.PromoManager.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Promo Manager</h1>
+<p>
+    
+    <button type="button" class="btn btn-primary"><a style="text-decoration : none; color:white;" asp-page="Create">Create New</a></button>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Promo[0].PromoCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Promo[0].PromoValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Promo[0].PromoDescribe)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Promo)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PromoCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PromoValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PromoDescribe)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary"><a style="text-decoration : none; color:white;" asp-page="./Edit" asp-route-id="@item.PromoCode">Edit</a></button>
+                    |
+                    <button type="button" class="btn btn-danger"><a style="text-decoration : none; color:white;" asp-page="./Delete" asp-route-id="@item.PromoCode">Delete</a></button>
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
