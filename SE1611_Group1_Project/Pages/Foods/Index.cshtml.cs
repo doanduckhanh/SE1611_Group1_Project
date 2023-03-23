@@ -46,30 +46,30 @@ namespace SE1611_Group1_Project.Pages.Foods
         }
         public IActionResult OnPostAddToCart(int id)
         {
-            var cartId = GetCartId();
+            var cartId = HttpContext.Session.GetString("Username");
             AddToCart(id, cartId);
             HttpContext.Session.SetInt32("Count", new CartModel(context).GetCount());
             return RedirectToPage("/Foods/Index");
         }
 
 
-        public static string GetCartId()
-        {
-            if (string.IsNullOrEmpty(SettingsCart.CartId))
-            {
-                if (!string.IsNullOrEmpty(SettingsCart.UserName))
-                {
-                    SettingsCart.CartId = SettingsCart.UserName;
-                }
+        //public static string GetCartId()
+        //{
+        //    if (string.IsNullOrEmpty(SettingsCart.CartId))
+        //    {
+        //        if (!string.IsNullOrEmpty(SettingsCart.UserName))
+        //        {
+        //            SettingsCart.CartId = SettingsCart.UserName;
+        //        }
 
-                else
-                {
-                    Guid tempCartId = Guid.NewGuid();
-                    SettingsCart.CartId = tempCartId.ToString();
-                }
-            }
-            return SettingsCart.CartId;
-        }
+        //        else
+        //        {
+        //            Guid tempCartId = Guid.NewGuid();
+        //            SettingsCart.CartId = tempCartId.ToString();
+        //        }
+        //    }
+        //    return SettingsCart.CartId;
+        //}
 
         public void AddToCart(int foodId, String OrderCartId)
         {

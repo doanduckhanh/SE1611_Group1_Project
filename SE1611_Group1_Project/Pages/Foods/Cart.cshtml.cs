@@ -1,18 +1,24 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Configuration;
 using SE1611_Group1_Project.Models;
 using SE1611_Group1_Project.Services;
+using System.Numerics;
+using System.Text.RegularExpressions;
 
 namespace SE1611_Group1_Project.Pages.Foods
 {
     public class CartModel : PageModel
     {
         private readonly FoodOrderContext _context;
+        [BindProperty(SupportsGet = true)]
         public decimal total { get; set; }
         public int countItem { get; set; }
 
+        [BindProperty]
+        public string Code { get; set; }
         public CartModel(FoodOrderContext context)
         {
             _context = context;
@@ -34,6 +40,8 @@ namespace SE1611_Group1_Project.Pages.Foods
             total = GetTotal();
             countItem = GetCount();
             HttpContext.Session.SetInt32("Count", GetCount());
+            HttpContext.Session.SetString("Total", total.ToString());
+            ViewData["Total"] = HttpContext.Session.GetString("Total");
         }
         public decimal GetTotal()
         {
@@ -43,6 +51,25 @@ namespace SE1611_Group1_Project.Pages.Foods
             decimal? total = (from cartItems in _context.Carts
                               where cartItems.CartId == SettingsCart.CartId
                               select cartItems.Count * cartItems.Food.FoodPrice).Sum();
+
+            var promo = _context.Promos.SingleOrDefault(
+                c => c.PromoCode.Equals(Code));
+
+            if (promo != null)
+            {
+                if (promo.PromoValue.Contains('%'))
+                {
+                    string numStr = new string(promo.PromoValue.Where(c => Char.IsDigit(c)).ToArray());
+                    int num = int.Parse(numStr);
+                    var value = ((decimal)num / 100) * total;
+                    total -= value;
+                }
+                if (Regex.IsMatch(promo.PromoValue, @"^\d+$"))
+                {
+                    total -= int.Parse(promo.PromoValue);
+                }
+            }
+
             return total ?? 0;
         }
         public int GetCount()
@@ -79,6 +106,44 @@ namespace SE1611_Group1_Project.Pages.Foods
 
             return RedirectToPage("/Foods/Cart");
         }
+
+        public async Task<IActionResult> OnPostGiveCode()
+        {
+            // Retrieve session data
+            ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+
+            total = GetTotal();
+
+            if (_context.Carts != null)
+            {
+                Cart = _context.Carts
+                .Where(x => x.CartId.Equals(SettingsCart.CartId))
+                .Include(a => a.Food)
+                .Include(a => a.Food.Category).ToList();
+            }
+           
+            countItem = GetCount();
+            HttpContext.Session.SetInt32("Count", GetCount());
+
+            HttpContext.Session.SetString("Total", total.ToString());
+            ViewData["Total"] = HttpContext.Session.GetString("Total");
+
+            var promo = _context.Promos.SingleOrDefault(
+                c => c.PromoCode.Equals(Code));
+            if(promo == null)
+            {
+                ViewData["MyString"] = "Coupon code has expired or is incorrect";
+            }
+            else
+            {
+                ViewData["MyString"] = "";
+            }
+
+            return Page();
+        }
+
         public async Task<IActionResult> OnPostRemove(int id)
         {
             var cartItem = _context.Carts.SingleOrDefault(
