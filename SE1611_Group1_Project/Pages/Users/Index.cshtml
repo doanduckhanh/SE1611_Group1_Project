@@ -45,7 +45,14 @@
                     <td>@Html.DisplayFor(modelItem => item.Password)</td>
                     <td>
                         <a asp-page="./Edit" asp-route-id="@item.UserId">Edit</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.UserId">Delete</a>
+                        @if (item.UserId == (ViewData["UserId"] as int?))
+                        {
+                            <a asp-page="./Delete" hidden asp-route-id="@item.UserId">Delete</a>
+                        }
+                        else
+                        {
+                            <a asp-page="./Delete" asp-route-id="@item.UserId">Delete</a>
+                        }
                     </td>
                 </tr>
             }

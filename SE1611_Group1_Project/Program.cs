@@ -1,3 +1,4 @@
+using SE1611_Group1_Project.Middleware;
 using SE1611_Group1_Project.FileUploadService;
 using SE1611_Group1_Project.Models;
 
@@ -14,6 +15,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
+    app.UseMiddleware<ViewDataMiddleware>();
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
@@ -29,5 +31,9 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.UseSession();
+app.Use(async (context, next) =>
+{
+    await new ViewDataMiddleware(next).InvokeAsync(context);
+});
 
 app.Run();

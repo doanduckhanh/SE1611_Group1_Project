@@ -33,7 +33,14 @@
             @Html.DisplayNameFor(model => model.Food.FoodStatus)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Food.FoodStatus)
+            @if (Model.Food.FoodStatus == 0)
+            {
+                <p>Deactived</p>
+            }
+            else
+            {
+                <p>Actived</p>
+            }
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Food.Category)

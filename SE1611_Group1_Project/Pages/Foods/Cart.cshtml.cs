@@ -6,6 +6,7 @@ using NuGet.Configuration;
 using SE1611_Group1_Project.Models;
 using SE1611_Group1_Project.Services;
 using System.Numerics;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace SE1611_Group1_Project.Pages.Foods
@@ -68,8 +69,12 @@ namespace SE1611_Group1_Project.Pages.Foods
                 {
                     total -= int.Parse(promo.PromoValue);
                 }
+                HttpContext.Session.SetString("CodePromo", Code.ToString());
+            } else
+            {
+                HttpContext.Session.Remove("CodePromo");
             }
-
+            
             return total ?? 0;
         }
         public int GetCount()
@@ -128,6 +133,7 @@ namespace SE1611_Group1_Project.Pages.Foods
             HttpContext.Session.SetInt32("Count", GetCount());
 
             HttpContext.Session.SetString("Total", total.ToString());
+            
             ViewData["Total"] = HttpContext.Session.GetString("Total");
 
             var promo = _context.Promos.SingleOrDefault(
@@ -181,6 +187,27 @@ namespace SE1611_Group1_Project.Pages.Foods
             HttpContext.Session.SetInt32("Count", GetCount());
 
             return RedirectToPage("/Foods/Cart");
+        }
+
+        public async Task<IActionResult> OnPostCheckOut()
+        {
+            total = GetTotal();
+            HttpContext.Session.SetString("Total", total.ToString());
+            List<Cart> carts = _context.Carts
+                .Where(x => x.CartId.Equals(SettingsCart.CartId))
+                .Include(a => a.Food)
+                .Include(a => a.Food.Category).ToList();
+            List<OrderDetailDTO> orderDetailDTOs = new List<OrderDetailDTO>();
+            foreach (Cart cart in carts)
+            {
+                OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
+                orderDetailDTO.FoodId = cart.FoodId;
+                orderDetailDTO.Quantity = cart.Count;
+                orderDetailDTO.UnitPrice = cart.Food.FoodPrice;
+                orderDetailDTOs.Add(orderDetailDTO);
+            }
+            HttpContext.Session.SetString("OrderDetailList", JsonSerializer.Serialize(orderDetailDTOs));
+            return RedirectToPage("/Foods/Checkout");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿@page
 @model SE1611_Group1_Project.Pages.Foods.CartModel
 @{
+    var btnDisabled = ViewData["Username"] == null || @Model.total<=0 ? "disabled" : "";
 }
 <link href="~/css/Cart.css" rel="stylesheet" />
 <div class="main-cart mt-5">
@@ -73,10 +74,13 @@
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>
                 <div class="col text-right">@ViewData["Total"] $</div>
-            </div>
-            <button class="btn rounded" id="btn_checkout">CHECKOUT</button>
+            </div>           
         </div>
     </div>
 
     </div>
+    <form method="post" asp-page-handler="checkout">
+        <button type="submit" class="btn btn-primary" @btnDisabled>Check out</button>
+    </form>
+    
 </div>
