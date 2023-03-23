@@ -52,13 +52,10 @@ namespace SE1611_Group1_Project.Pages.ManagementFoods
             if (food != null)
             {
                 Food = food;
-                var carts = _context.Carts.Where(x => x.FoodId == food.FoodId);
-                _context.Carts.RemoveRange(carts);
-                var orderDetails = _context.OrderDetails.Where(x => x.FoodId == food.FoodId);
-                _context.OrderDetails.RemoveRange(orderDetails);
                 _context.Foods.Remove(Food);
                 await _context.SaveChangesAsync();
             }
+
             return RedirectToPage("./Index");
         }
     }
