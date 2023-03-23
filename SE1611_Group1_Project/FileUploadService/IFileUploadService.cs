@@ -1,4 +1,4 @@
-﻿namespace SE1611_Group1_A3.FileUploadService
+﻿namespace SE1611_Group1_Project.FileUploadService
 {
     public interface IFileUploadService
     {
