@@ -129,6 +129,7 @@ namespace SE1611_Group1_Project.Pages.Foods
             HttpContext.Session.SetInt32("Count", GetCount());
 
             HttpContext.Session.SetString("Total", total.ToString());
+            HttpContext.Session.SetString("CodePromo", Code.ToString());
             ViewData["Total"] = HttpContext.Session.GetString("Total");
 
             var promo = _context.Promos.SingleOrDefault(
