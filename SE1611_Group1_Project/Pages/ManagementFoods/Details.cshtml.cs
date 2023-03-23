@@ -18,10 +18,12 @@ namespace SE1611_Group1_Project.Pages.ManagementFoods
             _context = context;
         }
 
-      public Food Food { get; set; } = default!; 
+      public Food Food { get; set; } = default!;
+        public List<Category> listCategories { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            listCategories = _context.Categories.ToList();
             if (id == null || _context.Foods == null)
             {
                 return NotFound();
