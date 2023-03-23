@@ -32,14 +32,20 @@ namespace SE1611_Group1_Project.Pages.ManagementFoods
 
         [BindProperty]
         public Food Food { get; set; } = default!;
+
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync(IFormFile file)
         {
-          if (!ModelState.IsValid || _context.Foods == null || Food == null || Food.FoodPrice <=0)
+          if (!ModelState.IsValid || _context.Foods == null || Food == null)
             {
                 return Page();
+            }
+          if(Food.FoodPrice < 0)
+            {
+                ViewData["Message"] = string.Format("Price has to be more than 0!", Food.FoodPrice, DateTime.Now.ToString());
+                return OnGet();
             }
           if(file!= null)
             {

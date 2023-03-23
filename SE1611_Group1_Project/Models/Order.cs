@@ -23,7 +23,6 @@ namespace SE1611_Group1_Project.Models
         public string? Phone { get; set; }
         public string? Email { get; set; }
         public decimal? Total { get; set; }
-
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

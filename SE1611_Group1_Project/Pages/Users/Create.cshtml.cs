@@ -49,10 +49,8 @@ namespace SE1611_Group1_Project.Pages.Users
             {
                 return Page();
             }
-
             _context.Users.Add(User);
             await _context.SaveChangesAsync();
-
             return RedirectToPage("/Users/Index");
         }
     }
