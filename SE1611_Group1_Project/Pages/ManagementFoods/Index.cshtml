@@ -14,19 +14,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Food[0].FoodName)
+                Food name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Food[0].FoodPrice)
+                Price
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Food[0].FoodImage)
+               Image
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Food[0].FoodStatus)
+                Status
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Food[0].Category)
+                Category
             </th>
             <th></th>
         </tr>
@@ -41,13 +41,13 @@
                 @Html.DisplayFor(modelItem => item.FoodPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FoodImage)
+                <div style="width:200px"><img class="w-100" src="@item.FoodImage"/></div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FoodStatus)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryId)
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.FoodId">Edit</a> |
