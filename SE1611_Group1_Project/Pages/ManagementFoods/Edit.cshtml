@@ -24,10 +24,10 @@
                 <input asp-for="Food.FoodPrice" class="form-control" />
                 <span asp-validation-for="Food.FoodPrice" class="text-danger"></span>
             </div>
+            <div style="width:100px"><img class="w-100" src="@Model.filePath"></div>
             <div class="form-group">
-                <label asp-for="Food.FoodImage" class="control-label"></label>
-                <input asp-for="Food.FoodImage" class="form-control" />
-                <span asp-validation-for="Food.FoodImage" class="text-danger"></span>
+                <label class="form-label">Choose image</label>
+                <input class="form-control" type="file" asp-for="filePath" name="file" />
             </div>
             <div class="form-group">
                 <label asp-for="Food.FoodStatus" class="control-label"></label>
