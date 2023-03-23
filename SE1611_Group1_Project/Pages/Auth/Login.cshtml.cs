@@ -39,7 +39,8 @@ namespace SE1611_Group1_Project.Pages.Login
 
                     //-----------------------------
                     SettingsCart.UserName = HttpContext.Session.GetString("Username");
-                    MigrateCart();
+                    SettingsCart.CartId = SettingsCart.UserName;
+                    //MigrateCart();
                     HttpContext.Session.SetInt32("Count", new CartModel(_context).GetCount());
                     return RedirectToPage("/Foods/Index");
 				}

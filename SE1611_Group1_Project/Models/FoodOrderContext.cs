@@ -21,6 +21,7 @@ namespace SE1611_Group1_Project.Models
         public virtual DbSet<Food> Foods { get; set; } = null!;
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<OrderDetail> OrderDetails { get; set; } = null!;
+        public virtual DbSet<Promo> Promos { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
@@ -174,6 +175,28 @@ namespace SE1611_Group1_Project.Models
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.OrderId)
                     .HasConstraintName("FK__OrderDeta__Order__300424B4");
+            });
+
+            modelBuilder.Entity<Promo>(entity =>
+            {
+                entity.HasKey(e => e.PromoCode)
+                    .HasName("PK__Promo__32DBED349AE99C05");
+
+                entity.ToTable("Promo");
+
+                entity.Property(e => e.PromoCode)
+                    .HasMaxLength(40)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PromoDescribe)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Promo_Describe");
+
+                entity.Property(e => e.PromoValue)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("Promo_Value");
             });
 
             modelBuilder.Entity<Role>(entity =>
