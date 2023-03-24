@@ -1,0 +1,58 @@
+﻿@page
+@using SE1611_Group1_Project.Models;
+@model SE1611_Group1_Project.Pages.Orders.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    FoodOrderContext foodOrderContext = new FoodOrderContext();
+    int i = 1;
+}
+
+<div class="container">
+    <h2 style="margin-top:10px">Order Detail</h2>
+    <h3>Date created: @Model.date_created By @Model.username</h3>
+    <table class="table table-hover" style="margin-top:10px">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col">Number</th>
+                <th scope="col">Food</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.orderDetails)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@foodOrderContext.Foods.FirstOrDefault(x => x.FoodId == item.FoodId).FoodName</td>
+                    <td>@item.UnitPrice</td>
+                    <td>@item.Quantity</td>
+                    <td>
+                        @{
+                            var quantity = item.Quantity;
+                            var unitprice = item.UnitPrice;
+                            var sum = quantity * unitprice;
+                        }
+                        @sum
+                    </td>
+                    @{
+                        i++;
+                    }
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    <center>
+        <div>
+            <h2>Total : @Model.total</h2>
+        </div>
+        <div>
+            <button class="btn btn-outline-primary"><a asp-page="./Index">Back to List</a></button>
+        </div>
+    </center>
+
+</div>
+
