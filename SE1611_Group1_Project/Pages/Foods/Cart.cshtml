@@ -77,10 +77,10 @@
             </div>           
         </div>
     </div>
-
+        <form method="post" asp-page-handler="checkout">
+            <button type="submit" class="btn btn-primary" @btnDisabled>Check out</button>
+        </form>
     </div>
-    <form method="post" asp-page-handler="checkout">
-        <button type="submit" class="btn btn-primary" @btnDisabled>Check out</button>
-    </form>
+    
     
 </div>
