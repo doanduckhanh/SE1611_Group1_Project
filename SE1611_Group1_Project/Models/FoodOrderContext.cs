@@ -41,9 +41,6 @@ namespace SE1611_Group1_Project.Models
                 entity.HasKey(e => e.RecordId)
                     .HasName("PK__Carts__603930688B159E9D");
 
-                entity.HasIndex(e => e.CartId, "UC")
-                    .IsUnique();
-
                 entity.Property(e => e.RecordId).HasColumnName("Record_id");
 
                 entity.Property(e => e.CartId)
@@ -56,9 +53,9 @@ namespace SE1611_Group1_Project.Models
                 entity.Property(e => e.FoodId).HasColumnName("Food_id");
 
                 entity.HasOne(d => d.CartNavigation)
-                    .WithOne(p => p.Cart)
-                    .HasPrincipalKey<User>(p => p.UserName)
-                    .HasForeignKey<Cart>(d => d.CartId)
+                    .WithMany(p => p.Carts)
+                    .HasPrincipalKey(p => p.UserName)
+                    .HasForeignKey(d => d.CartId)
                     .HasConstraintName("FK__Carts__Cartid__Username");
 
                 entity.HasOne(d => d.Food)
@@ -142,7 +139,6 @@ namespace SE1611_Group1_Project.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_User");
             });
 
@@ -170,7 +166,7 @@ namespace SE1611_Group1_Project.Models
             modelBuilder.Entity<Promo>(entity =>
             {
                 entity.HasKey(e => e.PromoCode)
-                    .HasName("PK__Promo__32DBED34D8E09444");
+                    .HasName("PK__Promo__32DBED3473F7547C");
 
                 entity.ToTable("Promo");
 
@@ -205,10 +201,7 @@ namespace SE1611_Group1_Project.Models
             {
                 entity.ToTable("User");
 
-                entity.HasIndex(e => e.UserName, "UCU")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.UserName, "UQ__User__C9F28456D6F0F6E7")
+                entity.HasIndex(e => e.UserName, "UQ__User__C9F28456DA72EA3A")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("User_id");

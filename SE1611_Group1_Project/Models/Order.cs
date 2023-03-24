@@ -15,10 +15,10 @@ namespace SE1611_Group1_Project.Models
         public string? PromoCode { get; set; }
         public string? UserName { get; set; }
         public decimal? Total { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         public virtual Promo? PromoCodeNavigation { get; set; }
-        public virtual User User { get; set; } = null!;
+        public virtual User? User { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

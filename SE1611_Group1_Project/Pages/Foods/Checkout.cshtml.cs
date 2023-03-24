@@ -50,12 +50,13 @@ namespace SE1611_Group1_Project.Pages.Foods
                 promocode = HttpContext.Session.GetString("CodePromo");
             } else
             {
-                promocode = "";
+                promocode = null;
             }
             order.PromoCode = promocode;
             order.UserName = HttpContext.Session.GetString("Username");
             total = Decimal.Parse(HttpContext.Session.GetString("Total"));
             order.Total = total;
+            order.UserId = int.Parse(HttpContext.Session.GetInt32("UserId").ToString());
             CreateOrder(order, orderDetailDTOs);
             return RedirectToPage("/Foods/Index");
         }
@@ -66,16 +67,8 @@ namespace SE1611_Group1_Project.Pages.Foods
             // Set the order's total to the orderTotal count
             order.Total = orderTotal;
             // Save the order
-            try
-            {
                 foodOrderContext.Orders.Add(order);
                 foodOrderContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message);
-                return -1;
-            }
             int orderID = foodOrderContext.Orders.Select(o => o.OrderId).Max();
             // Iterate over the items in the cart, adding the order details for each
             foreach (OrderDetailDTO item in orderDetailDTOs)
