@@ -11,6 +11,7 @@ namespace SE1611_Group1_Project.Models
         public int? Count { get; set; }
         public DateTime? DateCreated { get; set; }
 
+        public virtual User? CartNavigation { get; set; }
         public virtual Food? Food { get; set; }
     }
 }

@@ -29,8 +29,8 @@ namespace SE1611_Group1_Project.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-                optionsBuilder.UseSqlServer(config.GetConnectionString("ConnectionStrings"));
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("server=localhost; database=FoodOrder;Integrated security=true;");
             }
         }
 
@@ -41,16 +41,25 @@ namespace SE1611_Group1_Project.Models
                 entity.HasKey(e => e.RecordId)
                     .HasName("PK__Carts__603930688B159E9D");
 
+                entity.HasIndex(e => e.CartId, "UC")
+                    .IsUnique();
+
                 entity.Property(e => e.RecordId).HasColumnName("Record_id");
 
                 entity.Property(e => e.CartId)
-                    .HasMaxLength(50)
+                    .HasMaxLength(160)
                     .IsUnicode(false)
                     .HasColumnName("Cart_id");
 
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
 
                 entity.Property(e => e.FoodId).HasColumnName("Food_id");
+
+                entity.HasOne(d => d.CartNavigation)
+                    .WithOne(p => p.Cart)
+                    .HasPrincipalKey<User>(p => p.UserName)
+                    .HasForeignKey<Cart>(d => d.CartId)
+                    .HasConstraintName("FK__Carts__Cartid__Username");
 
                 entity.HasOne(d => d.Food)
                     .WithMany(p => p.Carts)
@@ -109,51 +118,32 @@ namespace SE1611_Group1_Project.Models
 
                 entity.Property(e => e.OrderId).HasColumnName("Order_id");
 
-                entity.Property(e => e.Address)
-                    .HasMaxLength(70)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.City)
-                    .HasMaxLength(40)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Country)
-                    .HasMaxLength(40)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(160)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(160)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(160)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.OrderDate)
                     .HasColumnType("datetime")
                     .HasColumnName("Order_Date");
-
-                entity.Property(e => e.Phone)
-                    .HasMaxLength(24)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.PromoCode)
                     .HasMaxLength(40)
                     .IsUnicode(false);
 
-                entity.Property(e => e.State)
-                    .HasMaxLength(40)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Total).HasColumnType("numeric(10, 2)");
+
+                entity.Property(e => e.UserId).HasColumnName("User_id");
 
                 entity.Property(e => e.UserName)
                     .HasMaxLength(160)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.PromoCodeNavigation)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.PromoCode)
+                    .HasConstraintName("FK_Order_Promo");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Order_User");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
@@ -180,7 +170,7 @@ namespace SE1611_Group1_Project.Models
             modelBuilder.Entity<Promo>(entity =>
             {
                 entity.HasKey(e => e.PromoCode)
-                    .HasName("PK__Promo__32DBED341B229F54");
+                    .HasName("PK__Promo__32DBED34D8E09444");
 
                 entity.ToTable("Promo");
 
@@ -214,6 +204,12 @@ namespace SE1611_Group1_Project.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
+
+                entity.HasIndex(e => e.UserName, "UCU")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.UserName, "UQ__User__C9F28456D6F0F6E7")
+                    .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("User_id");
 

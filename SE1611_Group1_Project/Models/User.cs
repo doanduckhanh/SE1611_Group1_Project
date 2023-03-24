@@ -5,8 +5,13 @@ namespace SE1611_Group1_Project.Models
 {
     public partial class User
     {
+        public User()
+        {
+            Orders = new HashSet<Order>();
+        }
+
         public int UserId { get; set; }
-        public string? UserName { get; set; }
+        public string UserName { get; set; } = null!;
         public string? Password { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
@@ -19,5 +24,7 @@ namespace SE1611_Group1_Project.Models
         public int? RoleId { get; set; }
 
         public virtual Role? Role { get; set; }
+        public virtual Cart? Cart { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
