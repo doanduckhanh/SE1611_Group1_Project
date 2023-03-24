@@ -20,6 +20,17 @@ namespace SE1611_Group1_Project.Pages.Orders
 
         public IActionResult OnGet()
         {
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+            ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");
+            if (HttpContext.Session.GetInt32("UserId") == null || HttpContext.Session.GetInt32("Role") == null)
+            {
+                Response.Redirect("/Auth/Login");
+            }
+            else if (HttpContext.Session.GetInt32("UserId") != null || HttpContext.Session.GetInt32("Role") != null)
+            {
+                Response.Redirect("/Auth/403");
+            }
             return Page();
         }
 
@@ -30,7 +41,8 @@ namespace SE1611_Group1_Project.Pages.Orders
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Orders == null || Order == null)
+            
+            if (!ModelState.IsValid || _context.Orders == null || Order == null)
             {
                 return Page();
             }

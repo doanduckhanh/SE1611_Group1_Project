@@ -24,6 +24,17 @@ namespace SE1611_Group1_Project.Pages.Orders
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+            ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");
+            if (HttpContext.Session.GetInt32("UserId") == null || HttpContext.Session.GetInt32("Role") == null)
+            {
+                Response.Redirect("/Auth/Login");
+            }
+            else if (HttpContext.Session.GetInt32("UserId") != null || HttpContext.Session.GetInt32("Role") != null)
+            {
+                Response.Redirect("/Auth/403");
+            }
             if (id == null || _context.Orders == null)
             {
                 return NotFound();

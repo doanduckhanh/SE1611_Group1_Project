@@ -28,6 +28,14 @@ namespace SE1611_Group1_Project.Pages.Orders
         public DateTime? date_created { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+            ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                Response.Redirect("/Auth/Login");
+            }
+           
             if (id == null || _context.Orders == null)
             {
                 return NotFound();

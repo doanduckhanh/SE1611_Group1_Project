@@ -30,7 +30,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white ms-2" asp-area="" asp-page="/Foods/Index">Menu</a>
                             </li>
-
+                            
                             <li class="nav-item">
                                 <a style="position:relative;" class="nav-link text-white ms-2" asp-area="" asp-page="/Foods/Cart">
                                     Cart <i class="fa fa-solid fa-cart-shopping"></i>
@@ -40,6 +40,13 @@
                                     }
                                 </a>
                             </li>
+
+                            @if ((ViewData["Role"] as int?) != 1 && (ViewData["Role"] as int?) != null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white ms-2" asp-page="/Orders/Index">Order Manager</a>
+                                </li>
+                            }
                         }
                         @if ((ViewData["Role"] as int?) == 1)
                         {
@@ -61,6 +68,7 @@
                                 </ul>
                             </li>
                         }
+                      
                     </ul>
                     @if (ViewData["Username"] != null)
                     {
