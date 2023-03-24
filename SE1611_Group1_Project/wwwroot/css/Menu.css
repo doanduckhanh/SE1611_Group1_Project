@@ -1,8 +1,10 @@
 ﻿body {
-    /*background: url('../images/bg-2.jpg') no-repeat center;
-    background-size: cover;*/
+    background: url('../images/bg-2.jpg') no-repeat center;
+    background-size: cover;
     min-height: 88vh;
-    background-color: RGB(189 147 115);
+/*    background-color: RGB(189 147 115);
+*/
+
 }
 
 .btn_custom {
