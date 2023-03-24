@@ -1,7 +1,15 @@
 ﻿@page
 @model SE1611_Group1_Project.Pages.Statistics.statisticsModel
+
 @{
+    var top10 = ViewData["Top10Data"] as IEnumerable<dynamic>;
+    var top10F = ViewData["Top10DataF"] as IEnumerable<dynamic>;
+    var dailyResults = ViewData["DailyResults"] as IEnumerable<dynamic>;
+    var yearDate = ViewData["Year"];
+    var monthDate = ViewData["Month"];
+    var monthlyTotalSales = ViewData["monthlyTotalSales"];
 }
+
 
 <!--Load the AJAX API-->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -13,28 +21,54 @@
     // Set a callback to run when the Google Visualization API is loaded.
     google.charts.setOnLoadCallback(drawChart);
 
+    // Draw the pie chart for Sarah's pizza when Charts is loaded.
+    google.charts.setOnLoadCallback(drawSarahChart);
+
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
+    // Callback that draws the pie chart for Sarah's pizza.
+
+
+    // Callback that draws the pie chart for Sarah's pizza.
+    function drawSarahChart() {
+
+        // Create the data table for Sarah's pizza.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Food Name');
+        data.addColumn('number', 'Quantity');
+
+        @foreach (var item in top10F) {
+            <text>data.addRow(['@item.FoodName '+' @item.FoodPrice $', @item.Quantity]);</text>
+        }
+
+        // Set options for Sarah's pie chart.
+        var options = {
+            title: 'Top ten drinks chosen at least in the month @monthDate - year @yearDate',
+            width: 700,
+            height: 700
+        };
+
+        // Instantiate and draw the chart for Sarah's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('Sarah_chart_div'));
+        chart.draw(data, options);
+    }
+
     function drawChart() {
 
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-            ['Mushrooms', 3],
-            ['Onions', 1],
-            ['Olives', 1],
-            ['Zucchini', 1],
-            ['Pepperoni', 2]
-        ]);
+        data.addColumn('string', 'Food Name');
+        data.addColumn('number', 'Quantity');
+        @foreach (var item in top10) {
+            <text>data.addRow(['@item.FoodName '+' @item.FoodPrice $', @item.Quantity]);</text>
+        }
 
         // Set chart options
         var options = {
-            'title': 'How Much Pizza I Ate Last Night',
-            'width': 400,
-            'height': 300
+            'title': 'Top 10 most chosen drinks of the month @monthDate - year @yearDate',
+            'width': 700,
+            'height': 700
         };
 
         // Instantiate and draw our chart, passing in some options.
@@ -42,7 +76,7 @@
         chart.draw(data, options);
 
 
-        //-----------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
         google.charts.load('current', { 'packages': ['line'] });
         google.charts.setOnLoadCallback(drawChart);
 
@@ -50,31 +84,34 @@
 
             var data = new google.visualization.DataTable();
             data.addColumn('number', 'Day');
-            data.addColumn('number', 'Guardians of the Galaxy');
-            data.addColumn('number', 'The Avengers');
-            data.addColumn('number', 'Transformers: Age of Extinction');
+            data.addColumn('number', 'TotalRevenue');
+            //data.addColumn('string', 'MostOrderedProduct');
 
-            data.addRows([
-                [1, 37.8, 80.8, 41.8],
-                [2, 30.9, 69.5, 32.4],
-                [3, 25.4, 57, 25.7],
-                [4, 11.7, 18.8, 10.5],
-                [5, 11.9, 17.6, 10.4],
-                [6, 8.8, 13.6, 7.7],
-                [7, 7.6, 12.3, 9.6],
-                [8, 12.3, 29.2, 10.6],
-                [9, 16.9, 42.9, 14.8],
-                [10, 12.8, 30.9, 11.6],
-                [11, 5.3, 7.9, 4.7],
-                [12, 6.6, 8.4, 5.2],
-                [13, 4.8, 6.3, 3.6],
-                [14, 4.2, 6.2, 3.4]
-            ]);
+            @foreach (var item in dailyResults) {
+            <text>data.addRow([@item.Day , @item.TotalRevenue]);</text>
+            }
+
+            //data.addRows([
+            //    [1, 37.8, 80.8],
+            //    [2, 30.9, 69.5],
+            //    [3, 25.4, 57, 25.7],
+            //    [4, 11.7, 18.8, 10.5],
+            //    [5, 11.9, 17.6, 10.4],
+            //    [6, 8.8, 13.6, 7.7],
+            //    [7, 7.6, 12.3, 9.6],
+            //    [8, 12.3, 29.2, 10.6],
+            //    [9, 16.9, 42.9, 14.8],
+            //    [10, 12.8, 30.9, 11.6],
+            //    [11, 5.3, 7.9, 4.7],
+            //    [12, 6.6, 8.4, 5.2],
+            //    [13, 4.8, 6.3, 3.6],
+            //    [14, 4.2, 6.2, 3.4]
+            //]);
 
             var options = {
                 chart: {
-                    title: 'Box Office Earnings in First Two Weeks of Opening',
-                    subtitle: 'in millions of dollars (USD)'
+                    title: 'Detailed chart of revenue in 1 month with total revenue of @monthlyTotalSales $',
+                    subtitle: 'dollars (USD)'
                 },
                 width: 900,
                 height: 500
@@ -87,5 +124,55 @@
     }
 </script>
 <!--Div that will hold the pie chart-->
-<div id="chart_div"></div>
-<div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+<div class="container">
+    <div>
+        <h4>Select day and month for statistics</h4>
+    </div>
+    <div>
+        <form id="myForm" method="post" asp-page="/Statistics/statistics" asp-page-handler="Selected">
+           YEAR: <select title="Select Year" asp-for="OrderDateYear" asp-items="Model.OrderDateYearView">
+            </select>
+           MONTH: <select id="month" title="Select Month" asp-for="OrderDateMonth" asp-items="Model.OrderDateMonthView">
+            </select>
+            <input id="vl2" type="submit" value="Submit" onclick="event.preventDefault(); submitForm('Submit')" />
+        </form>
+
+    </div>
+
+    <table class="columns mx-auto">
+        <tr>
+            <td><div id="chart_div" style="border: 1px solid #ccc"></div></td>
+            <td><div id="Sarah_chart_div" style="border: 1px solid #ccc"></div></td>
+        </tr>
+        <tr>
+            <td colspan="2"><div id="curve_chart" style="border: 1px solid #ccc; width: 900px; height: 500px"></div></td>
+        </tr>
+    </table>
+    <br />
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    const form = document.getElementById('myForm');
+    const select = form.querySelector('select');
+
+    select.addEventListener('change', function () {        
+        form.submit();
+        
+    });
+
+    function submitForm(handler) {
+        var form = document.getElementById('myForm');
+        form.action = form.action.replace('Selected', handler);
+        form.submit();
+    }
+
+</script>
+
+
+
+
