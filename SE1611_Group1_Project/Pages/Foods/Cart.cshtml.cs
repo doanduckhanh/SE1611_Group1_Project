@@ -194,7 +194,7 @@ namespace SE1611_Group1_Project.Pages.Foods
 
         public async Task<IActionResult> OnPostCheckOut()
         {
-            HttpContext.Session.SetString("Total", total.ToString());
+           // HttpContext.Session.SetString("Total", total.ToString());
             List<Cart> carts = _context.Carts
                 .Where(x => x.CartId.Equals(SettingsCart.CartId))
                 .Include(a => a.Food)
