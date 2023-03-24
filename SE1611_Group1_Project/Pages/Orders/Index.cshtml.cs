@@ -22,6 +22,14 @@ namespace SE1611_Group1_Project.Pages.Orders
 
         public async Task OnGetAsync()
         {
+            ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
+            ViewData["Role"] = HttpContext.Session.GetInt32("Role");
+            ViewData["Username"] = HttpContext.Session.GetString("Username");
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                Response.Redirect("/Auth/Login");
+            }
+          
             if (_context.Orders != null)
             {
                 Order = await _context.Orders.ToListAsync();

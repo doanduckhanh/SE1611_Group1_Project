@@ -2,9 +2,8 @@
 body {
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 100%;
-    background: url('../images/bg.jpeg')no-repeat center;
+    background: url('../images/Background_Login.jpg')no-repeat center;
     background-size: cover;
-  
 }
 
 .w3ls-login {

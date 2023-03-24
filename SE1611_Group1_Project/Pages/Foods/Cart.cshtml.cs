@@ -30,7 +30,10 @@ namespace SE1611_Group1_Project.Pages.Foods
             ViewData["Role"] = HttpContext.Session.GetInt32("Role");
             ViewData["Username"] = HttpContext.Session.GetString("Username");
             ViewData["UserId"] = HttpContext.Session.GetInt32("UserId");
-
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                Response.Redirect("/Auth/Login");
+            }
             if (_context.Carts != null)
             {
                 Cart = _context.Carts
@@ -191,7 +194,7 @@ namespace SE1611_Group1_Project.Pages.Foods
 
         public async Task<IActionResult> OnPostCheckOut()
         {
-            HttpContext.Session.SetString("Total", total.ToString());
+           // HttpContext.Session.SetString("Total", total.ToString());
             List<Cart> carts = _context.Carts
                 .Where(x => x.CartId.Equals(SettingsCart.CartId))
                 .Include(a => a.Food)

@@ -24,6 +24,12 @@ namespace SE1611_Group1_Project.Pages.Foods
             ViewData["Role"] = HttpContext.Session.GetInt32("Role");
             ViewData["Username"] = HttpContext.Session.GetString("Username");
             ViewData["Total"] = HttpContext.Session.GetString("Total");
+       
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                Response.Redirect("/Auth/Login");
+            }
+
             orderDetailDTOs = JsonSerializer.Deserialize<List<OrderDetailDTO>>(HttpContext.Session.GetString("OrderDetailList"));
             if (HttpContext.Session.GetString("CodePromo") != null)
             {

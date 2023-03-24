@@ -8,7 +8,7 @@
     int i = 1;
 }
 
-<div class="container">
+<div class="container my-3">
     <h2 style="margin-top:10px">Order Detail</h2>
     <h3>Date created: @Model.date_created By @Model.username</h3>
     <table class="table table-hover" style="margin-top:10px">
@@ -46,10 +46,10 @@
         </tbody>
     </table>
     <center>
-        <div>
-            <h2>Total : @Model.total</h2>
+        <div style="float: right;">
+            <h3>Total : @Model.total</h3>
         </div>
-        <div>
+        <div style="float: left;">
             <button class="btn btn-outline-primary"><a asp-page="./Index">Back to List</a></button>
         </div>
     </center>

@@ -4,46 +4,49 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="container my-3 pb-3">
+    <h2>Order List</h2>
 
-<h1>Order List</h1>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Order[0].OrderDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Order[0].PromoCode)
+                </th>
+                <th>
+                    Order By
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Order[0].Total)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Order)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PromoCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].OrderDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].PromoCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].Total)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Order) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PromoCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total)
-            </td>
-            <td>
-                <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+</div>
