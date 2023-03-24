@@ -19,6 +19,7 @@ namespace SE1611_Group1_Project.Pages.Users
         }
 
         public IList<User> User { get;set; } = default!;
+        public int userId { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

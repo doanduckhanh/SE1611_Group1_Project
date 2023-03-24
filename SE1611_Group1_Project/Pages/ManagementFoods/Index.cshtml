@@ -4,57 +4,92 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="container mb-3">
+    <h1>Food management</h1>
 
-<h1>Index</h1>
+    <p style="float:right">
+        <a class="btn btn-primary" asp-page="Create">New food</a>
+    </p>
+    <p style="float:left">
+        <form method="get">
+            @* <input type="text" asp-for="searchInput" placeholder="Search by name" />
+            @*   <button class="btn btn-primary" type="submit">Search</button>*@
+            <div class="input-group w-25">
+                <button type="submit" class="btn btn-outline-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                    </svg>
+                    <span class="visually-hidden">Button</span>
+                </button>
+                <input type="text" asp-for="searchInput" class="form-control" placeholder="Search by name" aria-label="Input group example" aria-describedby="basic-addon1">
+            </div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Food name
-            </th>
-            <th>
-                Price
-            </th>
-            <th>
-               Image
-            </th>
-            <th>
-                Status
-            </th>
-            <th>
-                Category
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Food) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodPrice)
-            </td>
-            <td>
-                <div style="width:200px"><img class="w-100" src="@item.FoodImage"/></div>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodStatus)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.FoodId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.FoodId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.FoodId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            <div class="form-group my-3">
+                <select class="col-lg-3 col-md-4" id="category" asp-for="categoryChoose" name="categoryChoose" onchange="this.form.submit()" class="form-control">
+                    <option value="0">-- Select a category --</option>
+                    @foreach (var c in Model.Category)
+                    {
+                        <option value="@c.CategoryId">@c.CategoryName</option>
+                    }
+                </select>
+            </div>
+        </form>
+
+    </p>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Food name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Image
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Category
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Food)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FoodName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FoodPrice)
+                    </td>
+                    <td>
+                        <div style="width:200px"><img class="w-100" src="@item.FoodImage" /></div>
+                    </td>
+                    <td>
+                        @if (item.FoodStatus == 0)
+                        {
+                            <p style="color:red">Deactived</p>
+                        }
+                        else
+                        {
+                            <p style="color:green">Actived</p>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.FoodId">Edit</a>
+                        @*      <a asp-page="./Details" asp-route-id="@item.FoodId">Details</a> |*@
+                        @*                <a asp-page="./Delete" asp-route-id="@item.FoodId">Delete</a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

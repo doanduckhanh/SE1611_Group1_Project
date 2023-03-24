@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post"  enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Food.FoodName" class="control-label"></label>
@@ -20,20 +20,33 @@
             </div>
             <div class="form-group">
                 <label asp-for="Food.FoodPrice" class="control-label"></label>
-                <input asp-for="Food.FoodPrice" required class="form-control" />
+                <input asp-for="Food.FoodPrice" min="1" required class="form-control" />
                 <span asp-validation-for="Food.FoodPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="form-label">Choose image</label>
-                <input id="btnChoose" class="form-control"  required type="file" name="file" />
+                <input id="btnChoose" class="form-control" required type="file" name="file" />
             </div>
             <div style="width:170px">
                 <img class="w-100" id="blah" src="/images/bg.jpeg" alt="your image" />
             </div>
-            <div class="form-group">
-                <label asp-for="Food.FoodStatus" class="control-label"></label>
-                <input asp-for="Food.FoodStatus"  class="form-control" />
-                <span asp-validation-for="Food.FoodStatus" class="text-danger"></span>
+            @*            <div class="form-group">
+            <label asp-for="Food.FoodStatus" class="control-label"></label>
+            <input asp-for="Food.FoodStatus"  class="form-control" />
+            <span asp-validation-for="Food.FoodStatus" class="text-danger"></span>
+            </div>*@
+            <label asp-for="Food.FoodStatus"></label>
+            <div class="form-check">
+                <input asp-for="Food.FoodStatus" class="form-check-input" type="radio" name="Food.FoodStatus" id="food-status-equal-to-0" value="0" checked>
+                <label class="form-check-label" for="food-status-equal-to-0">
+                    Deactived
+                </label>
+            </div>
+            <div class="form-check">
+                <input asp-for="Food.FoodStatus" class="form-check-input" type="radio" name="Food.FoodStatus" id="food-status-not-equal-to-0" value="1">
+                <label class="form-check-label" for="food-status-not-equal-to-0">
+                    Actived
+                </label>
             </div>
             <div class="form-group">
                 <label asp-for="Food.CategoryId" class="control-label"></label>
@@ -51,14 +64,16 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
 }
 <script>
     btnChoose.onchange = evt => {
         const [file] = btnChoose.files
-  if (file) {
-    blah.src = URL.createObjectURL(file)
-  }
-}
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
 </script>
