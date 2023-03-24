@@ -5,64 +5,66 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Food</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Food.FoodId" />
-            <div class="form-group">
-                <label asp-for="Food.FoodName" class="control-label"></label>
-                <input asp-for="Food.FoodName" class="form-control" />
-                <span asp-validation-for="Food.FoodName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Food.FoodPrice" class="control-label"></label>
-                <input asp-for="Food.FoodPrice" min="1" class="form-control" />
-                <input asp-for="Food.FoodImage" class="form-control" type="hidden"/>
-                <span asp-validation-for="Food.FoodPrice" class="text-danger"></span>
-            </div>
+<div class="container">
+    <h1>Edit</h1>
+    <h4>Food</h4>
+    <hr />
+    <div class="row ">
+        <div class="col-md-4">
+            <form method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Food.FoodId" />
+                <div class="form-group">
+                    <label asp-for="Food.FoodName" class="control-label"></label>
+                    <input asp-for="Food.FoodName" class="form-control" />
+                    <span asp-validation-for="Food.FoodName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Food.FoodPrice" class="control-label"></label>
+                    <input asp-for="Food.FoodPrice" min="1" class="form-control" />
+                    <input asp-for="Food.FoodImage" class="form-control" type="hidden" />
+                    <span asp-validation-for="Food.FoodPrice" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                <label asp-for="Food.FoodStatus" class="control-label"></label>
+                <input asp-for="Food.FoodStatus" class="form-control" />
+                <span asp-validation-for="Food.FoodStatus" class="text-danger"></span>
+                </div>*@
+                <label asp-for="Food.FoodStatus"></label>
+                <div class="form-check">
+                    <input asp-for="Food.FoodStatus" class="form-check-input" type="radio" name="Food.FoodStatus" id="food-status-equal-to-0" value="0" checked>
+                    <label class="form-check-label" for="food-status-equal-to-0">
+                        Deactived
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input asp-for="Food.FoodStatus" class="form-check-input" type="radio" name="Food.FoodStatus" id="food-status-not-equal-to-0" value="1">
+                    <label class="form-check-label" for="food-status-not-equal-to-0">
+                        Actived
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Food.CategoryId" class="control-label"></label>
+                    <select asp-for="Food.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                    <span asp-validation-for="Food.CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
             <div style="width:100px"><img class="w-100" id="blah" src="@Model.Food.FoodImage"></div>
             <div class="form-group">
                 <input class="form-control" id="btnChoose" type="file" name="file" />
             </div>
-            @*<div class="form-group">
-                <label asp-for="Food.FoodStatus" class="control-label"></label>
-                <input asp-for="Food.FoodStatus" class="form-control" />
-                <span asp-validation-for="Food.FoodStatus" class="text-danger"></span>
-            </div>*@
-            <label asp-for="Food.FoodStatus"></label>
-            <div class="form-check">
-                <input asp-for="Food.FoodStatus" class="form-check-input" type="radio" name="Food.FoodStatus" id="food-status-equal-to-0" value="0" checked>
-                <label class="form-check-label" for="food-status-equal-to-0">
-                    Deactived
-                </label>
-            </div>
-            <div class="form-check">
-                <input asp-for="Food.FoodStatus" class="form-check-input" type="radio" name="Food.FoodStatus" id="food-status-not-equal-to-0" value="1">
-                <label class="form-check-label" for="food-status-not-equal-to-0">
-                    Actived
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Food.CategoryId" class="control-label"></label>
-                <select asp-for="Food.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                <span asp-validation-for="Food.CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./Index">Back to List</a>
     </div>
 </div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
