@@ -70,7 +70,7 @@ namespace SE1611_Group1_Project.Pages.Foods
                 }
                 HttpContext.Session.SetString("CodePromo", Code.ToString());
             }
-            HttpContext.Session.SetString("CodePromo", null);
+            else HttpContext.Session.Remove("CodePromo");
             return total ?? 0;
         }
         public int GetCount()
