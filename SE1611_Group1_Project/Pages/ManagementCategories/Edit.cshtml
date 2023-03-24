@@ -6,26 +6,24 @@
 }
 
 <div class="container">
-    <h1>Edit</h1>
-
-    <h4>Category</h4>
+    <h1>Edit page</h1>
     <hr />
     <div class="row">
         <div class="col-md-4">
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Category.CategoryId" />
-                <div class="form-group">
-                    <label asp-for="Category.CategoryName" class="control-label"></label>
+                <div class="form-group my-1">
+                    <label asp-for="Category.CategoryName" class="control-label mb-2"></label>
                     <input asp-for="Category.CategoryName" required class="form-control" />
                     <span asp-validation-for="Category.CategoryName" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Category.CategoryDescription" class="control-label"></label>
+                <div class="form-group my-1">
+                    <label class="control-label mb-2">Description</label>
                     <input asp-for="Category.CategoryDescription" required class="form-control" />
                     <span asp-validation-for="Category.CategoryDescription" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group my-4">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </form>

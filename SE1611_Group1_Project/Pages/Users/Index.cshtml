@@ -44,7 +44,7 @@
                     <td>@Html.DisplayFor(modelItem => item.UserName)</td>
                     <td>@Html.DisplayFor(modelItem => item.Password)</td>
                     <td>
-                        <input type="submit" asp-page="./Edit" asp-route-id="@item.UserId" class="btn btn-primary" value="Submit" />
+                        <a type="button" value="Edit" asp-page="./Edit" asp-route-id="@item.UserId" class="btn btn-primary">Edit</a>
                     </td>
                     <td>
                          @if (item.UserId == (ViewData["UserId"] as int?))
